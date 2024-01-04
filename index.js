@@ -43,6 +43,12 @@ function drawButton(x, y, width, height, text) {
     c.fillText(text, x + width / 2 - 5, y + height / 2 + 5);
 }
 
+function clearCanvas() {
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = 'white';
+    c.fillRect(0, 0, canvas.width, canvas.height);
+}
+
 // Store player choices
 let player1Choice = null;
 let player2Choice = null;
@@ -61,10 +67,29 @@ function determineWinner() {
         return 'Player 2 wins!';
     }
 }
+
 function drawResult(result) {
-  c.fillStyle = 'black';
-  c.font = '20px Arial';
-  c.fillText(result, canvasWidth / 2 - 50, canvasHeight / 2);
+    c.fillStyle = 'black';
+    c.font = '20px Arial';
+    c.fillText(result, canvasWidth / 2 - 50, canvasHeight / 2);
+}
+
+function redrawCanvas() {
+    clearCanvas();
+
+    // Redraw characters
+    c.fillStyle = 'blue';
+    c.fillRect(character1X, character1Y, characterWidth, characterHeight);
+    c.fillStyle = 'red';
+    c.fillRect(character2X, character2Y, characterWidth, characterHeight);
+
+    // Redraw buttons
+    drawButton(rock1X, buttonY, buttonWidth, buttonHeight, 'R');
+    drawButton(paper1X, buttonY, buttonWidth, buttonHeight, 'P');
+    drawButton(scissors1X, buttonY, buttonWidth, buttonHeight, 'S');
+    drawButton(rock2X, buttonY, buttonWidth, buttonHeight, 'R');
+    drawButton(paper2X, buttonY, buttonWidth, buttonHeight, 'P');
+    drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, 'S');
 }
 
 // Event listener for mouse clicks
@@ -104,7 +129,10 @@ canvas.addEventListener('click', function (e) {
 
         if (player1Choice !== null && player2Choice !== null) {
             const result = determineWinner();
-            console.log(result);
+
+            // Display the result on the canvas
+            redrawCanvas();
+            drawResult(result);
 
             // Reset choices for the next round
             player1Choice = null;
@@ -153,4 +181,3 @@ const scissors2X = character2X + (3 * characterWidth) / 4 - buttonWidth / 2 + bu
 drawButton(rock2X, buttonY, buttonWidth, buttonHeight, 'R');
 drawButton(paper2X, buttonY, buttonWidth, buttonHeight, 'P');
 drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, 'S');
-
