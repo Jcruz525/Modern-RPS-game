@@ -153,7 +153,17 @@ function setupGame() {
  
      // Draw characters using images
     c.drawImage(character1Image, character1X, character1Y, characterWidth, characterHeight);
-    c.drawImage(character2Image, character2X, character2Y, characterWidth, characterHeight);
+    // Save the current transformation state
+c.save();
+
+// Flip horizontally by scaling the x-axis by -1
+c.scale(-1, 1);
+
+// Draw player 2 with flipped coordinates
+c.drawImage(character2Image, -character2X - characterWidth, character2Y, characterWidth, characterHeight);
+
+// Restore the transformation state
+c.restore();
     drawRPSButtons()
 }
 
@@ -200,7 +210,16 @@ function redrawCanvas() {
     drawHPBar('Player 2', player2HP, canvasWidth - 110, 30, 'red');
 
     c.drawImage(character1Image, character1X, character1Y, characterWidth, characterHeight);
-    c.drawImage(character2Image, character2X, character2Y, characterWidth, characterHeight);
+    c.save();
+
+    // Flip horizontally by scaling the x-axis by -1
+    c.scale(-1, 1);
+    
+    // Draw player 2 with flipped coordinates
+    c.drawImage(character2Image, -character2X - characterWidth, character2Y, characterWidth, characterHeight);
+    
+    // Restore the transformation state
+    c.restore();
 
     
     // Redraw buttons
