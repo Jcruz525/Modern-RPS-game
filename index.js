@@ -100,7 +100,7 @@ function drawHPBar(player, hp, x, y, color) {
   c.fillText(player, x + barWidth / 2 - c.measureText(player).width / 2, y - textPadding);
 
   // Draw HP bar background
-  c.fillStyle = 'lightgray';
+  c.fillStyle ='darkgrey';
   c.fillRect(x, y, barWidth, barHeight);
 
   // Draw actual HP bar based on current HP
@@ -111,7 +111,7 @@ function drawHPBar(player, hp, x, y, color) {
   // Draw HP value inline with the HP bar
   c.fillStyle = 'black';
   if (color === 'blue') {
-      c.fillText('HP: ' + hp, x + currentWidth + textPadding, y + barHeight / 2 + 5);
+      c.fillText('HP: ' + hp, x + barWidth + textPadding, y + barHeight / 2 + 5);
   } else if (color === 'red') {
       c.fillText('HP: ' + hp, x - c.measureText('HP: ' + hp).width - textPadding, y + barHeight / 2 + 5);
   }
