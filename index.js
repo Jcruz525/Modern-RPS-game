@@ -1,6 +1,5 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-
 const canvasWidth = 1024;
 const canvasHeight = 576;
 
@@ -43,6 +42,34 @@ function drawButton(x, y, width, height, text) {
     c.fillText(text, x + width / 2 - 5, y + height / 2 + 5);
 }
 
+function drawHPBar(player, hp, x, y, color) {
+  const barWidth = 100;
+  const barHeight = 10;
+  const textPadding = 10; // Adjust this value for padding between text and bar
+
+  // Draw player name above the HP bar
+  c.fillStyle = 'black';
+  c.font = '12px Arial';
+  c.fillText(player, x + barWidth / 2 - c.measureText(player).width / 2, y - textPadding);
+
+  // Draw HP bar background
+  c.fillStyle = 'lightgray';
+  c.fillRect(x, y, barWidth, barHeight);
+
+  // Draw actual HP bar based on current HP
+  c.fillStyle = color;
+  const currentWidth = (hp / 100) * barWidth;
+  c.fillRect(x, y, currentWidth, barHeight);
+
+  // Draw HP value inline with the HP bar
+  c.fillStyle = 'black';
+  if (color === 'blue') {
+      c.fillText('HP: ' + hp, x + currentWidth + textPadding, y + barHeight / 2 + 5);
+  } else if (color === 'red') {
+      c.fillText('HP: ' + hp, x - c.measureText('HP: ' + hp).width - textPadding, y + barHeight / 2 + 5);
+  }
+}
+
 function clearCanvas() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.fillStyle = 'white';
@@ -52,6 +79,45 @@ function clearCanvas() {
 // Store player choices
 let player1Choice = null;
 let player2Choice = null;
+
+let roundCount = 1;
+let player1HP = 100;
+let player2HP = 100;
+
+// Function to set up the initial state and draw the canvas
+function setupGame() {
+    clearCanvas();
+
+    // Draw round counter at the top and center of the canvas
+    c.fillStyle = 'black';
+    c.font = '16px Arial';
+    const roundCounterText = 'Round: ' + roundCount;
+    const roundCounterTextWidth = c.measureText(roundCounterText).width;
+    c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 20);
+
+    // Draw HP bars for each player
+    drawHPBar('Player 1', player1HP, 10, 30, 'blue');
+    drawHPBar('Player 2', player2HP, canvasWidth - 110, 30, 'red');
+     // Draw characters
+     const characterWidth = 50;
+     const characterHeight = 20;
+ 
+     // First character
+     const character1X = canvasWidth / 4 - characterWidth / 2;
+     const character1Y = canvasHeight - 2 * characterHeight;
+     c.fillStyle = 'blue';
+     c.fillRect(character1X, character1Y, characterWidth, characterHeight);
+ 
+     // Second character
+     const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
+     const character2Y = canvasHeight - 2 * characterHeight;
+     c.fillStyle = 'red';
+     c.fillRect(character2X, character2Y, characterWidth, characterHeight);
+}
+
+// Call the setup function to initialize the game state
+setupGame();
+
 
 // Determine the winner based on RPS rules
 function determineWinner() {
@@ -76,6 +142,17 @@ function drawResult(result) {
 
 function redrawCanvas() {
     clearCanvas();
+
+    // Draw round counter at the top and center of the canvas
+    c.fillStyle = 'black';
+    c.font = '16px Arial';
+    const roundCounterText = 'Round: ' + roundCount;
+    const roundCounterTextWidth = c.measureText(roundCounterText).width;
+    c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 20);
+
+    // Draw HP bars for each player
+    drawHPBar('Player 1', player1HP, 10, 30, 'blue');
+    drawHPBar('Player 2', player2HP, canvasWidth - 110, 30, 'red');
 
     // Redraw characters
     c.fillStyle = 'blue';
@@ -129,6 +206,16 @@ canvas.addEventListener('click', function (e) {
 
         if (player1Choice !== null && player2Choice !== null) {
             const result = determineWinner();
+
+            // Update round count
+            roundCount++;
+
+            // Adjust HP based on the result
+            if (result === 'Player 1 wins!') {
+                player2HP -= 10; // Decrease HP for Player 2
+            } else if (result === 'Player 2 wins!') {
+                player1HP -= 10; // Decrease HP for Player 1
+            }
 
             // Display the result on the canvas
             redrawCanvas();
