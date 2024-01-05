@@ -63,8 +63,7 @@ const characterHeight = 50;
 // First character
 const character1X = canvasWidth / 4 - characterWidth / 2;
 const character1Y = canvasHeight - 2 * characterHeight;
-c.fillStyle = 'blue';
-c.fillRect(character1X, character1Y, characterWidth, characterHeight);
+
 
 let currentFrame = 0;
 const frameCount = 6; // Number of frames in the animation
@@ -74,8 +73,7 @@ const frameInterval = 100; // Interval between frames in milliseconds
 // Second character
 const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
 const character2Y = canvasHeight - 2 * characterHeight;
-c.fillStyle = 'red';
-c.fillRect(character2X, character2Y, characterWidth, characterHeight);
+
 
 // Add Rock, Paper, Scissors buttons above characters with space
 const buttonWidth = 30;
