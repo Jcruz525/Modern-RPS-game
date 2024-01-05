@@ -3,6 +3,49 @@ const c = canvas.getContext('2d');
 const canvasWidth = 1024;
 const canvasHeight = 576;
 
+const character1Image = new Image();
+character1Image.src = 'girlKnightSprite/Idle (1).png';
+
+const character2Image = new Image();
+character2Image.src = 'redhatSprite/Idle (1).png';
+
+// Function to preload images
+function preloadImages(images, callback) {
+  let loadedImages = 0;
+
+  images.forEach(image => {
+    image.onload = () => {
+      loadedImages++;
+      if (loadedImages === images.length) {
+        callback();
+      }
+    };
+  });
+}
+
+// Preload the images before setting up the game
+preloadImages([character1Image, character2Image], setupGame);
+// Function to draw Rock, Paper, Scissors buttons above characters with space
+function drawRPSButtons() {
+  // First character buttons
+  const rock1X = character1X + (characterWidth - buttonWidth) / 2;
+  const paper1X = character1X + characterWidth / 4 - buttonWidth / 2 - buttonSpacing - buttonWidth;
+  const scissors1X = character1X + (3 * characterWidth) / 4 - buttonWidth / 2 + buttonSpacing + buttonWidth;
+  const buttonY = character1Y - buttonHeight - 5;
+
+  drawButton(rock1X, buttonY, buttonWidth, buttonHeight, 'R');
+  drawButton(paper1X, buttonY, buttonWidth, buttonHeight, 'P');
+  drawButton(scissors1X, buttonY, buttonWidth, buttonHeight, 'S');
+
+  // Second character buttons
+  const rock2X = character2X + (characterWidth - buttonWidth) / 2;
+  const paper2X = character2X + characterWidth / 4 - buttonWidth / 2 - buttonSpacing - buttonWidth;
+  const scissors2X = character2X + (3 * characterWidth) / 4 - buttonWidth / 2 + buttonSpacing + buttonWidth;
+
+  drawButton(rock2X, buttonY, buttonWidth, buttonHeight, 'R');
+  drawButton(paper2X, buttonY, buttonWidth, buttonHeight, 'P');
+  drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, 'S');
+}
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 
@@ -12,15 +55,21 @@ canvas.style.margin = 'auto';
 c.fillStyle = 'white';
 c.fillRect(0, 0, canvas.width, canvas.height);
 
+
 // Add characters at the bottom of the canvas
-const characterWidth = 50;
-const characterHeight = 20;
+const characterWidth = 100;
+const characterHeight = 50;
 
 // First character
 const character1X = canvasWidth / 4 - characterWidth / 2;
 const character1Y = canvasHeight - 2 * characterHeight;
 c.fillStyle = 'blue';
 c.fillRect(character1X, character1Y, characterWidth, characterHeight);
+
+let currentFrame = 0;
+const frameCount = 6; // Number of frames in the animation
+const frameInterval = 100; // Interval between frames in milliseconds
+
 
 // Second character
 const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
@@ -99,20 +148,13 @@ function setupGame() {
     drawHPBar('Player 1', player1HP, 10, 30, 'blue');
     drawHPBar('Player 2', player2HP, canvasWidth - 110, 30, 'red');
      // Draw characters
-     const characterWidth = 50;
-     const characterHeight = 20;
+     const characterWidth = 100;
+     const characterHeight = 100;
  
-     // First character
-     const character1X = canvasWidth / 4 - characterWidth / 2;
-     const character1Y = canvasHeight - 2 * characterHeight;
-     c.fillStyle = 'blue';
-     c.fillRect(character1X, character1Y, characterWidth, characterHeight);
- 
-     // Second character
-     const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
-     const character2Y = canvasHeight - 2 * characterHeight;
-     c.fillStyle = 'red';
-     c.fillRect(character2X, character2Y, characterWidth, characterHeight);
+     // Draw characters using images
+    c.drawImage(character1Image, character1X, character1Y, characterWidth, characterHeight);
+    c.drawImage(character2Image, character2X, character2Y, characterWidth, characterHeight);
+    drawRPSButtons()
 }
 
 // Call the setup function to initialize the game state
@@ -151,15 +193,16 @@ function redrawCanvas() {
     c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 20);
 
     // Draw HP bars for each player
+    // Draw characters
+    const characterWidth = 100;
+    const characterHeight = 100;
     drawHPBar('Player 1', player1HP, 10, 30, 'blue');
     drawHPBar('Player 2', player2HP, canvasWidth - 110, 30, 'red');
 
-    // Redraw characters
-    c.fillStyle = 'blue';
-    c.fillRect(character1X, character1Y, characterWidth, characterHeight);
-    c.fillStyle = 'red';
-    c.fillRect(character2X, character2Y, characterWidth, characterHeight);
+    c.drawImage(character1Image, character1X, character1Y, characterWidth, characterHeight);
+    c.drawImage(character2Image, character2X, character2Y, characterWidth, characterHeight);
 
+    
     // Redraw buttons
     drawButton(rock1X, buttonY, buttonWidth, buttonHeight, 'R');
     drawButton(paper1X, buttonY, buttonWidth, buttonHeight, 'P');
