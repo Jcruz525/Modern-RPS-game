@@ -9,7 +9,7 @@ character1Image.src = 'girlKnightSprite/Idle (1).png';
 const character2Image = new Image();
 character2Image.src = 'redhatSprite/Idle (1).png';
 
-// Function to preload images
+
 function preloadImages(images, callback) {
   let loadedImages = 0;
 
@@ -23,11 +23,10 @@ function preloadImages(images, callback) {
   });
 }
 
-// Preload the images before setting up the game
+
 preloadImages([character1Image, character2Image], setupGame);
-// Function to draw Rock, Paper, Scissors buttons above characters with space
+
 function drawRPSButtons() {
-  // First character buttons
   const rock1X = character1X + (characterWidth - buttonWidth) / 2;
   const paper1X = character1X + characterWidth / 4 - buttonWidth / 2 - buttonSpacing - buttonWidth;
   const scissors1X = character1X + (3 * characterWidth) / 4 - buttonWidth / 2 + buttonSpacing + buttonWidth;
@@ -37,7 +36,7 @@ function drawRPSButtons() {
   drawButton(paper1X, buttonY, buttonWidth, buttonHeight, 'P');
   drawButton(scissors1X, buttonY, buttonWidth, buttonHeight, 'S');
 
-  // Second character buttons
+ 
   const rock2X = character2X + (characterWidth - buttonWidth) / 2;
   const paper2X = character2X + characterWidth / 4 - buttonWidth / 2 - buttonSpacing - buttonWidth;
   const scissors2X = character2X + (3 * characterWidth) / 4 - buttonWidth / 2 + buttonSpacing + buttonWidth;
@@ -56,11 +55,11 @@ c.fillStyle = 'white';
 c.fillRect(0, 0, canvas.width, canvas.height);
 
 
-// Add characters at the bottom of the canvas
+
 const characterWidth = 100;
 const characterHeight = 50;
 
-// First character
+
 const character1X = canvasWidth / 4 - characterWidth / 2;
 const character1Y = canvasHeight - 2 * characterHeight;
 
@@ -70,12 +69,11 @@ const frameCount = 6; // Number of frames in the animation
 const frameInterval = 100; // Interval between frames in milliseconds
 
 
-// Second character
+
 const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
 const character2Y = canvasHeight - 2 * characterHeight;
 
 
-// Add Rock, Paper, Scissors buttons above characters with space
 const buttonWidth = 30;
 const buttonHeight = 15;
 const buttonSpacing = 10; // Adjust this value to add space between buttons
