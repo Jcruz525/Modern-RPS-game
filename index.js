@@ -78,7 +78,7 @@ const buttonWidth = 30;
 const buttonHeight = 15;
 const buttonSpacing = 10; // Adjust this value to add space between buttons
 
-// Function to draw a button with text
+
 function drawButton(x, y, width, height, text) {
     c.fillStyle = 'gray';
     c.fillRect(x, y, width, height);
@@ -92,21 +92,21 @@ function drawHPBar(player, hp, x, y, color) {
   const barHeight = 10;
   const textPadding = 10; // Adjust this value for padding between text and bar
 
-  // Draw player name above the HP bar
+ 
   c.fillStyle = 'black';
   c.font = '12px Arial';
   c.fillText(player, x + barWidth / 2 - c.measureText(player).width / 2, y - textPadding);
 
-  // Draw HP bar background
+  
   c.fillStyle ='darkgrey';
   c.fillRect(x, y, barWidth, barHeight);
 
-  // Draw actual HP bar based on current HP
+  
   c.fillStyle = color;
   const currentWidth = (hp / 100) * barWidth;
   c.fillRect(x, y, currentWidth, barHeight);
 
-  // Draw HP value inline with the HP bar
+
   c.fillStyle = 'black';
   if (color === 'blue') {
       c.fillText('HP: ' + hp, x + barWidth + textPadding, y + barHeight / 2 + 5);
@@ -121,7 +121,7 @@ function clearCanvas() {
     c.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-// Store player choices
+
 let player1Choice = null;
 let player2Choice = null;
 
@@ -129,33 +129,33 @@ let roundCount = 1;
 let player1HP = 100;
 let player2HP = 100;
 
-// Function to set up the initial state and draw the canvas
+
 function setupGame() {
     clearCanvas();
 
-    // Draw round counter at the top and center of the canvas
+    
     c.fillStyle = 'black';
     c.font = '16px Arial';
     const roundCounterText = 'Round: ' + roundCount;
     const roundCounterTextWidth = c.measureText(roundCounterText).width;
     c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 20);
 
-    // Draw HP bars for each player
+   
     drawHPBar('Player 1', player1HP, 10, 30, 'blue');
     drawHPBar('Player 2', player2HP, canvasWidth - 110, 30, 'red');
-     // Draw characters
+    
      const characterWidth = 100;
      const characterHeight = 100;
  
-     // Draw characters using images
+    
     c.drawImage(character1Image, character1X, character1Y, characterWidth, characterHeight);
-    // Save the current transformation state
+   
 c.save();
 
-// Flip horizontally by scaling the x-axis by -1
+
 c.scale(-1, 1);
 
-// Draw player 2 with flipped coordinates
+
 c.drawImage(character2Image, -character2X - characterWidth, character2Y, characterWidth, characterHeight);
 
 // Restore the transformation state
