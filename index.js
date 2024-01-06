@@ -9,7 +9,7 @@ character1Image.src = "girlKnightSprite/Idle (1).png";
 const character2Image = new Image();
 character2Image.src = "redhatSprite/Idle (1).png";
 
-// Function to preload images
+
 function preloadImages(images, callback) {
   let loadedImages = 0;
   images.forEach((image) => {
@@ -22,11 +22,10 @@ function preloadImages(images, callback) {
   });
 }
 
-// Preload the images before setting up the game
+
 preloadImages([character1Image, character2Image], setupGame);
-// Function to draw Rock, Paper, Scissors buttons above characters with space
+
 function drawRPSButtons() {
-  // First character buttons
   const rock1X = character1X + (characterWidth - buttonWidth) / 2;
   const paper1X =
     character1X +
@@ -46,7 +45,7 @@ function drawRPSButtons() {
   drawButton(paper1X, buttonY, buttonWidth, buttonHeight, "P");
   drawButton(scissors1X, buttonY, buttonWidth, buttonHeight, "S");
 
-  // Second character buttons
+ 
   const rock2X = character2X + (characterWidth - buttonWidth) / 2;
   const paper2X =
     character2X +
@@ -74,11 +73,11 @@ canvas.style.margin = "auto";
 c.fillStyle = "white";
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-// Add characters at the bottom of the canvas
+
 const characterWidth = 100;
 const characterHeight = 50;
 
-// First character
+
 const character1X = canvasWidth / 4 - characterWidth / 2;
 const character1Y = canvasHeight - 2 * characterHeight;
 
@@ -86,16 +85,15 @@ let currentFrame = 0;
 const frameCount = 6; // Number of frames in the animation
 const frameInterval = 100; // Interval between frames in milliseconds
 
-// Second character
+
 const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
 const character2Y = canvasHeight - 2 * characterHeight;
 
-// Add Rock, Paper, Scissors buttons above characters with space
 const buttonWidth = 30;
 const buttonHeight = 15;
 const buttonSpacing = 10; // Adjust this value to add space between buttons
 
-// Function to draw a button with text
+
 function drawButton(x, y, width, height, text) {
   c.fillStyle = "gray";
   c.fillRect(x, y, width, height);
@@ -110,19 +108,15 @@ function drawHPBar(player, hp, x, y, color) {
   const textPadding = 10; // Adjust this value for padding between text and bar
 
   // Draw player name above the HP bar
-  c.fillStyle = "black";
-  c.font = "12px Arial";
-  c.fillText(
-    player,
-    x + barWidth / 2 - c.measureText(player).width / 2,
-    y - textPadding
-  );
+  c.fillStyle = 'black';
+  c.font = '12px Arial';
+  c.fillText(player, x + barWidth / 2 - c.measureText(player).width / 2, y - textPadding);
 
   // Draw HP bar background
-  c.fillStyle = "darkgrey";
+  c.fillStyle ='darkgrey';
   c.fillRect(x, y, barWidth, barHeight);
 
-  // Draw actual HP bar based on current HP
+  
   c.fillStyle = color;
   const currentWidth = (hp / 100) * barWidth;
   c.fillRect(x, y, currentWidth, barHeight);
@@ -146,7 +140,7 @@ function clearCanvas() {
   c.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-// Store player choices
+
 let player1Choice = null;
 let player2Choice = null;
 
@@ -154,25 +148,25 @@ let roundCount = 1;
 let player1HP = 100;
 let player2HP = 100;
 
-// Function to set up the initial state and draw the canvas
+
 function setupGame() {
   clearCanvas();
 
-  // Draw round counter at the top and center of the canvas
+  
   c.fillStyle = "black";
   c.font = "16px Arial";
   const roundCounterText = "Round: " + roundCount;
   const roundCounterTextWidth = c.measureText(roundCounterText).width;
   c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 20);
 
-  // Draw HP bars for each player
+ 
   drawHPBar("Player 1", player1HP, 10, 30, "blue");
   drawHPBar("Player 2", player2HP, canvasWidth - 110, 30, "red");
-  // Draw characters
+ 
   const characterWidth = 100;
   const characterHeight = 100;
 
-  // Draw characters using images
+ 
   c.drawImage(
     character1Image,
     character1X,
@@ -180,20 +174,14 @@ function setupGame() {
     characterWidth,
     characterHeight
   );
-  // Save the current transformation state
+ 
   c.save();
 
-  // Flip horizontally by scaling the x-axis by -1
-  c.scale(-1, 1);
+// Flip horizontally by scaling the x-axis by -1
+c.scale(-1, 1);
 
-  // Draw player 2 with flipped coordinates
-  c.drawImage(
-    character2Image,
-    -character2X - characterWidth,
-    character2Y,
-    characterWidth,
-    characterHeight
-  );
+// Draw player 2 with flipped coordinates
+c.drawImage(character2Image, -character2X - characterWidth, character2Y, characterWidth, characterHeight);
 
   // Restore the transformation state
   c.restore();
