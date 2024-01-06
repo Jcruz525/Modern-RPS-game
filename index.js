@@ -95,9 +95,9 @@ const buttonSpacing = 10; // Adjust this value to add space between buttons
 
 
 function drawButton(x, y, width, height, text) {
-  c.fillStyle = "gray";
+  c.fillStyle = 'black';
   c.fillRect(x, y, width, height);
-  c.fillStyle = "black";
+  c.fillStyle = "white";
   c.font = "12px Arial";
   c.fillText(text, x + width / 2 - 5, y + height / 2 + 5);
 }
