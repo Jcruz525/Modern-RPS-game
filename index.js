@@ -3,11 +3,16 @@ const c = canvas.getContext("2d");
 const canvasWidth = 1024;
 const canvasHeight = 576;
 
+const backgroundImage = new Image();
+backgroundImage.src = "/ORS97Z0.jpg";
+
 const character1Image = new Image();
 character1Image.src = "girlKnightSprite/Idle (1).png";
 
 const character2Image = new Image();
 character2Image.src = "redhatSprite/Idle (1).png";
+
+const groundLevel = canvasHeight - 100; // Adjust this value based on your ground level
 
 
 function preloadImages(images, callback) {
@@ -23,7 +28,7 @@ function preloadImages(images, callback) {
 }
 
 
-preloadImages([character1Image, character2Image], setupGame);
+preloadImages([backgroundImage,character1Image, character2Image], setupGame);
 
 function drawRPSButtons() {
   const rock1X = character1X + (characterWidth - buttonWidth) / 2;
@@ -152,7 +157,7 @@ let player2HP = 100;
 function setupGame() {
   clearCanvas();
 
-  
+  c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
   c.fillStyle = "black";
   c.font = "16px Arial";
   const roundCounterText = "Round: " + roundCount;
