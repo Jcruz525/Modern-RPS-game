@@ -220,6 +220,7 @@ function drawResult(result) {
 function redrawCanvas() {
   clearCanvas();
 
+  c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
   // Draw round counter at the top and center of the canvas
   c.fillStyle = "black";
   c.font = "16px Arial";
