@@ -84,7 +84,7 @@ const characterHeight = 50;
 
 
 const character1X = canvasWidth / 4 - characterWidth / 2;
-const character1Y = canvasHeight - 2 * characterHeight;
+const character1Y = canvasHeight - 4.5 * characterHeight;
 
 let currentFrame = 0;
 const frameCount = 6; // Number of frames in the animation
@@ -92,7 +92,7 @@ const frameInterval = 100; // Interval between frames in milliseconds
 
 
 const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
-const character2Y = canvasHeight - 2 * characterHeight;
+const character2Y = canvasHeight - 4.5 * characterHeight;
 
 const buttonWidth = 30;
 const buttonHeight = 15;
