@@ -108,8 +108,8 @@ function drawButton(x, y, width, height, text) {
 }
 
 function drawHPBar(player, hp, x, y, color) {
-  const barWidth = 100;
-  const barHeight = 10;
+  const barWidth = 200;
+  const barHeight = 15;
   const textPadding = 10; // Adjust this value for padding between text and bar
 
   // Draw player name above the HP bar
@@ -166,7 +166,7 @@ function setupGame() {
 
  
   drawHPBar("Player 1", player1HP, 10, 30, "blue");
-  drawHPBar("Player 2", player2HP, canvasWidth - 110, 30, "red");
+  drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "red");
  
   const characterWidth = 100;
   const characterHeight = 100;
