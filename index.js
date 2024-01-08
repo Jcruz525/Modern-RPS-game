@@ -274,7 +274,7 @@ canvas.addEventListener("click", function (e) {
 
   // Check if the click is within the button area
   if (
-    mouseY >= buttonY &&
+    mouseY >= buttonY - 20 &&
     mouseY <= buttonY + buttonHeight &&
     ((mouseX >= rock1X && mouseX <= rock1X + buttonWidth) ||
       (mouseX >= paper1X && mouseX <= paper1X + buttonWidth) ||
@@ -333,7 +333,7 @@ canvas.addEventListener("mousemove", function (e) {
 
   // Check if the mouse is over any of the buttons
   if (
-    mouseY >= buttonY &&
+    mouseY >= buttonY - 20  &&
     mouseY <= buttonY + buttonHeight &&
     ((mouseX >= rock1X && mouseX <= rock1X + buttonWidth) ||
       (mouseX >= paper1X && mouseX <= paper1X + buttonWidth) ||
