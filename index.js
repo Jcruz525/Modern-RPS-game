@@ -233,7 +233,7 @@ function redrawCanvas() {
   const characterWidth = 100;
   const characterHeight = 100;
   drawHPBar("Player 1", player1HP, 10, 30, "blue");
-  drawHPBar("Player 2", player2HP, canvasWidth - 110, 30, "red");
+  drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "red");
 
   c.drawImage(
     character1Image,
