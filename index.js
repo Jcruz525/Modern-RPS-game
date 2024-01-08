@@ -259,13 +259,7 @@ function redrawCanvas() {
   // Restore the transformation state
   c.restore();
 
-  // Redraw buttons
-  drawButton(rock1X, buttonY, buttonWidth, buttonHeight, "R");
-  drawButton(paper1X, buttonY, buttonWidth, buttonHeight, "P");
-  drawButton(scissors1X, buttonY, buttonWidth, buttonHeight, "S");
-  drawButton(rock2X, buttonY, buttonWidth, buttonHeight, "R");
-  drawButton(paper2X, buttonY, buttonWidth, buttonHeight, "P");
-  drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, "S");
+drawRPSButtons();
 }
 
 // Event listener for mouse clicks
