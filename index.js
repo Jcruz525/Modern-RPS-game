@@ -131,7 +131,7 @@ function drawHPBar(player, hp, x, y, color) {
   c.fillStyle = "black";
   if (color === "blue") {
     c.fillText("HP: " + hp, x + barWidth + textPadding, y + barHeight / 2 + 5);
-  } else if (color === "red") {
+  } else if (color === "green") {
     c.fillText(
       "HP: " + hp,
       x - c.measureText("HP: " + hp).width - textPadding,
