@@ -213,8 +213,8 @@ function determineWinner() {
 
 function drawResult(result) {
   c.fillStyle = "black";
-  c.font = "20px Arial";
-  c.fillText(result, canvasWidth / 2 - 50, canvasHeight / 2);
+  c.font = "Bold 40px Arial";
+  c.fillText(result, canvasWidth / 2 - 110, canvasHeight / 3);
 }
 
 function redrawCanvas() {
