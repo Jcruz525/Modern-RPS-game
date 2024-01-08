@@ -44,7 +44,7 @@ function drawRPSButtons() {
     buttonWidth / 2 +
     buttonSpacing +
     buttonWidth;
-  const buttonY = character1Y - buttonHeight - 5;
+  const buttonY = character1Y - buttonHeight - 20;
 
   drawButton(rock1X, buttonY, buttonWidth, buttonHeight, "R");
   drawButton(paper1X, buttonY, buttonWidth, buttonHeight, "P");
