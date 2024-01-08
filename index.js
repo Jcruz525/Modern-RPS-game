@@ -111,6 +111,7 @@ function drawHPBar(player, hp, x, y, color) {
   const barWidth = 200;
   const barHeight = 15;
   const textPadding = 10; // Adjust this value for padding between text and bar
+  const borderWidth = 3;
 
   // Draw player name above the HP bar
   c.fillStyle = 'black';
@@ -137,6 +138,9 @@ function drawHPBar(player, hp, x, y, color) {
       y + barHeight / 2 + 5
     );
   }
+  c.strokeStyle = 'black'; // Set the border color
+c.lineWidth = borderWidth; // Set the border width
+c.strokeRect(x, y, barWidth, barHeight);
 }
 
 function clearCanvas() {
@@ -166,7 +170,7 @@ function setupGame() {
 
  
   drawHPBar("Player 1", player1HP, 10, 30, "blue");
-  drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "red");
+  drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "green");
  
   const characterWidth = 100;
   const characterHeight = 100;
@@ -233,7 +237,7 @@ function redrawCanvas() {
   const characterWidth = 100;
   const characterHeight = 100;
   drawHPBar("Player 1", player1HP, 10, 30, "blue");
-  drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "red");
+  drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "green");
 
   c.drawImage(
     character1Image,
