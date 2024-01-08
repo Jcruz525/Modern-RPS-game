@@ -304,9 +304,9 @@ canvas.addEventListener("click", function (e) {
       roundCount++;
 
       // Adjust HP based on the result
-      if (result === "Player 1 wins!") {
+      if (result === "Player 1 wins!" && player2HP > 0 ) {
         player2HP -= 10; // Decrease HP for Player 2
-      } else if (result === "Player 2 wins!") {
+      } else if (result === "Player 2 wins!" && player1HP > 0 ) {
         player1HP -= 10; // Decrease HP for Player 1
       }
 
