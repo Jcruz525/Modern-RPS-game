@@ -14,7 +14,6 @@ character2Image.src = "redhatSprite/Idle (1).png";
 
 const groundLevel = canvasHeight - 100; // Adjust this value based on your ground level
 
-
 function preloadImages(images, callback) {
   let loadedImages = 0;
   images.forEach((image) => {
@@ -26,9 +25,35 @@ function preloadImages(images, callback) {
     };
   });
 }
+function drawAugments() {
+  const augmentWidth = 150;
+  const augmentHeight = 200;
+  const augmentSpacing = 20;
 
+  const totalWidth = 3 * augmentWidth + 2 * augmentSpacing;
+  const startX = canvasWidth / 2 - totalWidth / 2;
+  const startY = canvasHeight / 2 - augmentHeight / 0.9;
 
-preloadImages([backgroundImage,character1Image, character2Image], setupGame);
+  for (let i = 0; i < 3; i++) {
+    const augmentX = startX + i * (augmentWidth + augmentSpacing);
+    const augmentY = startY;
+
+    // Draw augment rectangle
+    c.fillStyle = "orange"; // Set the color of the rectangle
+    c.fillRect(augmentX, augmentY, augmentWidth, augmentHeight);
+
+    // Draw text inside the rectangle
+    c.fillStyle = "black"; // Set the color of the text
+    c.font = "16px Arial";
+    c.fillText(
+      "Augment " + (i + 1),
+      augmentX + augmentWidth / 2 - 40,
+      augmentY + augmentHeight / 2 + 5
+    );
+  }
+}
+
+preloadImages([backgroundImage, character1Image, character2Image], setupGame);
 
 function drawRPSButtons() {
   const rock1X = character1X + (characterWidth - buttonWidth) / 2;
@@ -50,7 +75,6 @@ function drawRPSButtons() {
   drawButton(paper1X, buttonY, buttonWidth, buttonHeight, "P");
   drawButton(scissors1X, buttonY, buttonWidth, buttonHeight, "S");
 
- 
   const rock2X = character2X + (characterWidth - buttonWidth) / 2;
   const paper2X =
     character2X +
@@ -78,10 +102,8 @@ canvas.style.margin = "auto";
 c.fillStyle = "white";
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-
 const characterWidth = 100;
 const characterHeight = 50;
-
 
 const character1X = canvasWidth / 4 - characterWidth / 2;
 const character1Y = canvasHeight - 4.5 * characterHeight;
@@ -90,17 +112,15 @@ let currentFrame = 0;
 const frameCount = 6; // Number of frames in the animation
 const frameInterval = 100; // Interval between frames in milliseconds
 
-
 const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
 const character2Y = canvasHeight - 4.5 * characterHeight;
 
-const buttonWidth = 30;
-const buttonHeight = 15;
-const buttonSpacing = 10; // Adjust this value to add space between buttons
-
+const buttonWidth = 40;
+const buttonHeight = 25;
+const buttonSpacing = 15; // Adjust this value to add space between buttons
 
 function drawButton(x, y, width, height, text) {
-  c.fillStyle = 'black';
+  c.fillStyle = "black";
   c.fillRect(x, y, width, height);
   c.fillStyle = "white";
   c.font = "12px Arial";
@@ -114,15 +134,18 @@ function drawHPBar(player, hp, x, y, color) {
   const borderWidth = 3;
 
   // Draw player name above the HP bar
-  c.fillStyle = 'black';
-  c.font = '12px Arial';
-  c.fillText(player, x + barWidth / 2 - c.measureText(player).width / 2, y - textPadding);
+  c.fillStyle = "black";
+  c.font = "12px Arial";
+  c.fillText(
+    player,
+    x + barWidth / 2 - c.measureText(player).width / 2,
+    y - textPadding
+  );
 
   // Draw HP bar background
-  c.fillStyle ='darkgrey';
+  c.fillStyle = "darkgrey";
   c.fillRect(x, y, barWidth, barHeight);
 
-  
   c.fillStyle = color;
   const currentWidth = (hp / 100) * barWidth;
   c.fillRect(x, y, currentWidth, barHeight);
@@ -138,9 +161,10 @@ function drawHPBar(player, hp, x, y, color) {
       y + barHeight / 2 + 5
     );
   }
-  c.strokeStyle = 'black'; // Set the border color
-c.lineWidth = borderWidth; // Set the border width
-c.strokeRect(x, y, barWidth, barHeight);
+  // Draw HP bar border
+  c.strokeStyle = "black"; // Set the border color
+  c.lineWidth = borderWidth; // Set the border width
+  c.strokeRect(x, y, barWidth, barHeight);
 }
 
 function clearCanvas() {
@@ -149,7 +173,6 @@ function clearCanvas() {
   c.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-
 let player1Choice = null;
 let player2Choice = null;
 
@@ -157,25 +180,47 @@ let roundCount = 1;
 let player1HP = 100;
 let player2HP = 100;
 
-
 function setupGame() {
   clearCanvas();
 
   c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-  c.fillStyle = "black";
-  c.font = "16px Arial";
-  const roundCounterText = "Round: " + roundCount;
-  const roundCounterTextWidth = c.measureText(roundCounterText).width;
-  c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 20);
 
- 
+  // Draw black trapezoid background for the round number
+  const trapezoidHeight = 40;
+  const trapezoidTopWidth = 200;
+  const trapezoidBottomWidth = 400;
+  const trapezoidX = canvasWidth / 2 - trapezoidTopWidth / 2;
+  const trapezoidY = 0;
+
+  c.fillStyle = "rgba(0, 0, 0, 0.5)";
+  c.beginPath();
+  c.moveTo(trapezoidX, trapezoidY + trapezoidHeight);
+  c.lineTo(trapezoidX + trapezoidTopWidth, trapezoidY + trapezoidHeight);
+  c.lineTo(
+    trapezoidX +
+      (trapezoidTopWidth - trapezoidBottomWidth) / 2 +
+      trapezoidBottomWidth,
+    trapezoidY
+  );
+  c.lineTo(
+    trapezoidX + (trapezoidTopWidth - trapezoidBottomWidth) / 2,
+    trapezoidY
+  );
+  c.closePath();
+  c.fill();
+
+  c.fillStyle = "white";
+  c.font = "20px Arial";
+  const roundCounterText = "Round " + roundCount;
+  const roundCounterTextWidth = c.measureText(roundCounterText).width;
+  c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 27);
+
   drawHPBar("Player 1", player1HP, 10, 30, "blue");
   drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "green");
- 
+
   const characterWidth = 100;
   const characterHeight = 100;
 
- 
   c.drawImage(
     character1Image,
     character1X,
@@ -183,14 +228,20 @@ function setupGame() {
     characterWidth,
     characterHeight
   );
- 
+
   c.save();
 
-// Flip horizontally by scaling the x-axis by -1
-c.scale(-1, 1);
+  // Flip horizontally by scaling the x-axis by -1
+  c.scale(-1, 1);
 
-// Draw player 2 with flipped coordinates
-c.drawImage(character2Image, -character2X - characterWidth, character2Y, characterWidth, characterHeight);
+  // Draw player 2 with flipped coordinates
+  c.drawImage(
+    character2Image,
+    -character2X - characterWidth,
+    character2Y,
+    characterWidth,
+    characterHeight
+  );
 
   // Restore the transformation state
   c.restore();
@@ -216,7 +267,7 @@ function determineWinner() {
 }
 
 function drawResult(result) {
-  c.fillStyle = "black";
+  c.fillStyle = "Black";
   c.font = "Bold 40px Arial";
   c.fillText(result, canvasWidth / 2 - 110, canvasHeight / 3);
 }
@@ -225,13 +276,35 @@ function redrawCanvas() {
   clearCanvas();
 
   c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-  // Draw round counter at the top and center of the canvas
-  c.fillStyle = "black";
-  c.font = "16px Arial";
-  const roundCounterText = "Round: " + roundCount;
-  const roundCounterTextWidth = c.measureText(roundCounterText).width;
-  c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 20);
+  // Draw black trapezoid background for the round number
+  const trapezoidHeight = 40;
+  const trapezoidTopWidth = 200;
+  const trapezoidBottomWidth = 400;
+  const trapezoidX = canvasWidth / 2 - trapezoidTopWidth / 2;
+  const trapezoidY = 0;
 
+  c.fillStyle = "rgba(0, 0, 0, 0.5)";
+  c.beginPath();
+  c.moveTo(trapezoidX, trapezoidY + trapezoidHeight);
+  c.lineTo(trapezoidX + trapezoidTopWidth, trapezoidY + trapezoidHeight);
+  c.lineTo(
+    trapezoidX +
+      (trapezoidTopWidth - trapezoidBottomWidth) / 2 +
+      trapezoidBottomWidth,
+    trapezoidY
+  );
+  c.lineTo(
+    trapezoidX + (trapezoidTopWidth - trapezoidBottomWidth) / 2,
+    trapezoidY
+  );
+  c.closePath();
+  c.fill();
+
+  c.fillStyle = "white";
+  c.font = "20px Arial";
+  const roundCounterText = "Round " + roundCount;
+  const roundCounterTextWidth = c.measureText(roundCounterText).width;
+  c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 27);
   // Draw HP bars for each player
   // Draw characters
   const characterWidth = 100;
@@ -263,13 +336,19 @@ function redrawCanvas() {
   // Restore the transformation state
   c.restore();
 
-drawRPSButtons();
+  // Redraw buttons
+  drawRPSButtons();
+  if (roundCount % 3 === 0) {
+    drawAugments();
+  }
 }
 
 // Event listener for mouse clicks
 canvas.addEventListener("click", function (e) {
   const mouseX = e.clientX - canvas.getBoundingClientRect().left;
   const mouseY = e.clientY - canvas.getBoundingClientRect().top;
+  console.log("Mouse X:", mouseX, "Mouse Y:", mouseY);
+  console.log("Button 1 Positions:", rock1X, paper1X, scissors1X, buttonY);
 
   // Check if the click is within the button area
   if (
@@ -303,14 +382,13 @@ canvas.addEventListener("click", function (e) {
 
     if (player1Choice !== null && player2Choice !== null) {
       const result = determineWinner();
-
       // Update round count
       roundCount++;
 
       // Adjust HP based on the result
-      if (result === "Player 1 wins!" && player2HP > 0 ) {
+      if (result === "Player 1 wins!" && player2HP > 0) {
         player2HP -= 10; // Decrease HP for Player 2
-      } else if (result === "Player 2 wins!" && player1HP > 0 ) {
+      } else if (result === "Player 2 wins!" && player1HP > 0) {
         player1HP -= 10; // Decrease HP for Player 1
       }
 
@@ -332,7 +410,7 @@ canvas.addEventListener("mousemove", function (e) {
 
   // Check if the mouse is over any of the buttons
   if (
-    mouseY >= buttonY - 20  &&
+    mouseY >= buttonY - 20 &&
     mouseY <= buttonY + buttonHeight &&
     ((mouseX >= rock1X && mouseX <= rock1X + buttonWidth) ||
       (mouseX >= paper1X && mouseX <= paper1X + buttonWidth) ||
@@ -385,3 +463,4 @@ const scissors2X =
 drawButton(rock2X, buttonY, buttonWidth, buttonHeight, "R");
 drawButton(paper2X, buttonY, buttonWidth, buttonHeight, "P");
 drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, "S");
+
