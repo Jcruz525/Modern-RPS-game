@@ -11,8 +11,8 @@ let player1HP = 100;
 let player2HP = 100;
 
 let currentFrame = 0;
-const frameCount = 6; // Number of frames in the animation
-const frameInterval = 100; // Interval between frames in milliseconds
+const frameCount = 6; 
+const frameInterval = 100; 
 
 const characterWidth = 100;
 const characterHeight = 50;
@@ -25,7 +25,7 @@ const character2Y = canvasHeight - 4.5 * characterHeight;
 
 const buttonWidth = 40;
 const buttonHeight = 25;
-const buttonSpacing = 15; // Adjust this value to add space between buttons
+const buttonSpacing = 15; 
 
 const backgroundImage = new Image();
 backgroundImage.src = "/ORS97Z0.jpg";
@@ -36,23 +36,23 @@ character1Image.src = "girlKnightSprite/Idle (1).png";
 const character2Image = new Image();
 character2Image.src = "redhatSprite/Idle (1).png";
 
-const groundLevel = canvasHeight - 100; // Adjust this value based on your ground level
+const groundLevel = canvasHeight - 100; 
 
 const leafImage = new Image();
-leafImage.src = "leaf-autumn-fall-svgrepo-com.svg"; // Replace with the actual path to your leaf image
+leafImage.src = "leaf-autumn-fall-svgrepo-com.svg"; 
 
 const leaves = [];
 let animationPaused = false;
-let augmentShown = false; // Flag to check if augment is shown
+let augmentShown = false; 
 
 for (let i = 0; i < 10; i++) {
   setTimeout(() => {
     leaves.push({
-      x: Math.random() * canvasWidth, // Random x position within the canvas width
-      y: 0, // Start at the top of the canvas
-      speed: Math.random() * (4 - 1) + 2, // Random speed between 2 and 5
-      onGround: false, // Flag to indicate if the leaf has reached the ground
-      opacity: 1.0, // Initial opacity
+      x: Math.random() * canvasWidth,
+      y: 0, 
+      speed: Math.random() * (4 - 1) + 2, 
+      onGround: false, 
+      opacity: 1.0, 
     });
   }, i * 500); // Adjust the delay (500 milliseconds in this example)
 }
