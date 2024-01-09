@@ -20,8 +20,6 @@ const characterHeight = 50;
 const character1X = canvasWidth / 4 - characterWidth / 2;
 const character1Y = canvasHeight - 4.5 * characterHeight;
 
-
-
 const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
 const character2Y = canvasHeight - 4.5 * characterHeight;
 
@@ -59,7 +57,6 @@ for (let i = 0; i < 10; i++) {
   }, i * 500); // Adjust the delay (500 milliseconds in this example)
 }
 
-
 function drawContinueButton() {
   const buttonX = canvasWidth / 2 - 50;
   const buttonY = canvasHeight / 1.5;
@@ -73,7 +70,6 @@ function drawContinueButton() {
   c.font = "16px Arial";
   c.fillText("Continue", buttonX + 20, buttonY + 20);
 }
-
 
 function drawLeaves() {
   // If animation is paused or augment is shown, don't proceed with leaf animation
@@ -101,7 +97,9 @@ function drawLeaves() {
     c.save();
     c.translate(leaf.x + 10, leaf.y + 10); // Adjust the center point of rotation
     const rotationSpeed = 5; // Adjust the rotation speed as needed
-c.rotate((Math.PI / 180) * (Math.random() * rotationSpeed - rotationSpeed / 2)); // Random rotation angle within a smaller range
+    c.rotate(
+      (Math.PI / 180) * (Math.random() * rotationSpeed - rotationSpeed / 2)
+    ); // Random rotation angle within a smaller range
     c.drawImage(leafImage, -10, -10, 20, 20); // Adjust the size as needed
     c.restore();
 
@@ -208,8 +206,6 @@ canvas.style.margin = "auto";
 c.fillStyle = "white";
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-
-
 function drawButton(x, y, width, height, text) {
   c.fillStyle = "black";
   c.fillRect(x, y, width, height);
@@ -263,7 +259,6 @@ function clearCanvas() {
   c.fillStyle = "white";
   c.fillRect(0, 0, canvas.width, canvas.height);
 }
-
 
 function setupGame() {
   clearCanvas();
