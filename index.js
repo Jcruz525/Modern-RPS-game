@@ -568,6 +568,8 @@ for (let i = 0; i < 4; i++) {
   if (i === 0) {
     // Draw image instead of red square for the leftmost square
     const borderWidth = 3;
+    c.fillStyle = "rgba(0, 0, 0, 0.5)";
+    c.fillRect(squareX, squareY, squareSize, squareSize);
     c.drawImage(customImage1, squareX, squareY, squareSize, squareSize);
     c.strokeStyle = "black";
       c.lineWidth = borderWidth;
@@ -587,7 +589,8 @@ for (let i = 0; i < 4; i++) {
   if (i === 0) {
     // Draw black border around the horizontally flipped image for Player 2
     const borderWidth = 3;
-
+    c.fillStyle = "rgba(0, 0, 0, 0.5)";
+    c.fillRect(squareX, squareY, squareSize, squareSize);
     c.save();
     // Flip horizontally by scaling the x-axis by -1
     c.scale(-1, 1);
