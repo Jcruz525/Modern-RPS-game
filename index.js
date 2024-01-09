@@ -60,6 +60,21 @@ for (let i = 0; i < 10; i++) {
 }
 
 
+function drawContinueButton() {
+  const buttonX = canvasWidth / 2 - 50;
+  const buttonY = canvasHeight / 1.5;
+
+  // Draw button background
+  c.fillStyle = "blue";
+  c.fillRect(buttonX, buttonY, 100, 30);
+
+  // Draw button text
+  c.fillStyle = "white";
+  c.font = "16px Arial";
+  c.fillText("Continue", buttonX + 20, buttonY + 20);
+}
+
+
 function drawLeaves() {
   // If animation is paused or augment is shown, don't proceed with leaf animation
   if (animationPaused || augmentShown) {
@@ -408,6 +423,7 @@ function redrawCanvas() {
 
   // Redraw buttons
   drawRPSButtons();
+  drawContinueButton();
   if (roundCount % 3 === 0) {
     drawAugments();
   }
