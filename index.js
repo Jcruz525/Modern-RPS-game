@@ -3,6 +3,32 @@ const c = canvas.getContext("2d");
 const canvasWidth = 1024;
 const canvasHeight = 576;
 
+let player1Choice = null;
+let player2Choice = null;
+
+let roundCount = 1;
+let player1HP = 100;
+let player2HP = 100;
+
+let currentFrame = 0;
+const frameCount = 6; // Number of frames in the animation
+const frameInterval = 100; // Interval between frames in milliseconds
+
+const characterWidth = 100;
+const characterHeight = 50;
+
+const character1X = canvasWidth / 4 - characterWidth / 2;
+const character1Y = canvasHeight - 4.5 * characterHeight;
+
+
+
+const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
+const character2Y = canvasHeight - 4.5 * characterHeight;
+
+const buttonWidth = 40;
+const buttonHeight = 25;
+const buttonSpacing = 15; // Adjust this value to add space between buttons
+
 const backgroundImage = new Image();
 backgroundImage.src = "/ORS97Z0.jpg";
 
@@ -13,6 +39,71 @@ const character2Image = new Image();
 character2Image.src = "redhatSprite/Idle (1).png";
 
 const groundLevel = canvasHeight - 100; // Adjust this value based on your ground level
+
+const leafImage = new Image();
+leafImage.src = "leaf-autumn-fall-svgrepo-com.svg"; // Replace with the actual path to your leaf image
+
+const leaves = [];
+let animationPaused = false;
+let augmentShown = false; // Flag to check if augment is shown
+
+for (let i = 0; i < 10; i++) {
+  setTimeout(() => {
+    leaves.push({
+      x: Math.random() * canvasWidth, // Random x position within the canvas width
+      y: 0, // Start at the top of the canvas
+      speed: Math.random() * (4 - 1) + 2, // Random speed between 2 and 5
+      onGround: false, // Flag to indicate if the leaf has reached the ground
+      opacity: 1.0, // Initial opacity
+    });
+  }, i * 500); // Adjust the delay (500 milliseconds in this example)
+}
+
+
+function drawLeaves() {
+  // If animation is paused or augment is shown, don't proceed with leaf animation
+  if (animationPaused || augmentShown) {
+    requestAnimationFrame(drawLeaves);
+    return;
+  }
+
+  // Clear the entire canvas
+  c.clearRect(0, 0, canvasWidth, canvasHeight);
+
+  // Draw the background and other elements
+  setupGame();
+
+  for (const leaf of leaves) {
+    // Move the leaf down
+    leaf.y += leaf.speed;
+
+    // Check if the leaf has reached the ground
+    if (leaf.y + 20 >= groundLevel && !leaf.onGround) {
+      leaf.y = groundLevel - 20; // Adjust the position to just above the ground level
+      leaf.onGround = true;
+    }
+
+    c.save();
+    c.translate(leaf.x + 10, leaf.y + 10); // Adjust the center point of rotation
+    const rotationSpeed = 5; // Adjust the rotation speed as needed
+c.rotate((Math.PI / 180) * (Math.random() * rotationSpeed - rotationSpeed / 2)); // Random rotation angle within a smaller range
+    c.drawImage(leafImage, -10, -10, 20, 20); // Adjust the size as needed
+    c.restore();
+
+    // If the leaf is on the ground, reset its position
+    if (leaf.onGround) {
+      leaf.y = 0;
+      leaf.onGround = false;
+      leaf.x = Math.random() * canvasWidth;
+    }
+  }
+
+  // Request the next animation frame
+  requestAnimationFrame(drawLeaves);
+}
+
+// Start the animation
+drawLeaves();
 
 function preloadImages(images, callback) {
   let loadedImages = 0;
@@ -102,22 +193,7 @@ canvas.style.margin = "auto";
 c.fillStyle = "white";
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-const characterWidth = 100;
-const characterHeight = 50;
 
-const character1X = canvasWidth / 4 - characterWidth / 2;
-const character1Y = canvasHeight - 4.5 * characterHeight;
-
-let currentFrame = 0;
-const frameCount = 6; // Number of frames in the animation
-const frameInterval = 100; // Interval between frames in milliseconds
-
-const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
-const character2Y = canvasHeight - 4.5 * characterHeight;
-
-const buttonWidth = 40;
-const buttonHeight = 25;
-const buttonSpacing = 15; // Adjust this value to add space between buttons
 
 function drawButton(x, y, width, height, text) {
   c.fillStyle = "black";
@@ -173,12 +249,6 @@ function clearCanvas() {
   c.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-let player1Choice = null;
-let player2Choice = null;
-
-let roundCount = 1;
-let player1HP = 100;
-let player2HP = 100;
 
 function setupGame() {
   clearCanvas();
@@ -381,6 +451,7 @@ canvas.addEventListener("click", function (e) {
     console.log("Player 2 choice:", player2Choice);
 
     if (player1Choice !== null && player2Choice !== null) {
+      animationPaused = true;
       const result = determineWinner();
       // Update round count
       roundCount++;
@@ -395,7 +466,9 @@ canvas.addEventListener("click", function (e) {
       // Display the result on the canvas
       redrawCanvas();
       drawResult(result);
-
+      setTimeout(function () {
+        animationPaused = false;
+      }, 3000); // Adjust the delay as needed
       // Reset choices for the next round
       player1Choice = null;
       player2Choice = null;
@@ -463,4 +536,3 @@ const scissors2X =
 drawButton(rock2X, buttonY, buttonWidth, buttonHeight, "R");
 drawButton(paper2X, buttonY, buttonWidth, buttonHeight, "P");
 drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, "S");
-
