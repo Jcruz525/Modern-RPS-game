@@ -14,7 +14,7 @@ const player1IdleFrames = [
   "girlKnightSprite/Idle (8).png",
   "girlKnightSprite/Idle (9).png",
   "girlKnightSprite/Idle (10).png",
-  // Add more idle frame paths as needed
+  
 ];
 const player2IdleFrames = [
   "redhatSprite/Idle (1).png",
@@ -27,7 +27,7 @@ const player2IdleFrames = [
   "redhatSprite/Idle (8).png",
   "redhatSprite/Idle (9).png",
   "redhatSprite/Idle (10).png",
-  // Add more idle frame paths as needed
+  
 ];
 
 const augments = [
@@ -41,8 +41,7 @@ const augments = [
 ];
 
 let player1IdleFrameIndex = 0;
-console.log(player1IdleFrames); // Check if the paths are correct
-console.log(player2IdleFrames);
+
 
 let player1Choice = null;
 let player2Choice = null;
@@ -52,7 +51,7 @@ let player1HP = 100;
 let player2HP = 100;
 
 let currentFrame = 0;
-const frameCount = 6; 
+const frameCount = 15; 
 const frameInterval = 100; 
 
 const characterWidth = 100;
