@@ -43,6 +43,7 @@ const augments = [
 let player1IdleFrameIndex = 0;
 
 
+let remainingTime = 15;
 let player1Choice = null;
 let player2Choice = null;
 
@@ -98,7 +99,13 @@ function drawSquare(x, y, size, color) {
   c.fillRect(x, y, size, size);
 }
 
-
+function updateTimer() {
+  c.fillStyle = "white";
+  c.font = "20px Arial";
+  const timerText = "Time: " + remainingTime + "s";
+  const timerTextWidth = c.measureText(timerText).width;
+  c.fillText(timerText, canvasWidth / 2 - timerTextWidth / 2, 57);
+}
 
 
 for (let i = 0; i < 10; i++) {
@@ -488,6 +495,7 @@ for (let i = 0; i < 4; i++) {
   // Restore the transformation state
   c.restore();
   drawRPSButtons();
+  updateTimer();
 }
 
 // Call the setup function to initialize the game state
