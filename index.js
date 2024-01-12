@@ -81,6 +81,15 @@ const buttonWidth = 40;
 const buttonHeight = 25;
 const buttonSpacing = 15; 
 
+const rockImage = new Image();
+rockImage.src = "/icons8-rock-48.png"; 
+
+const paperImage = new Image();
+paperImage.src = "/icons8-paper-100.png";
+
+const scissorImage = new Image();
+scissorImage.src = "/icons8-scissors-64.png"; 
+
 const customImage1 = new Image();
 customImage1.src = "girlKnightSprite/profile-img.png"; // Replace with the actual path to your image
 
@@ -381,10 +390,11 @@ function drawRPSButtons() {
     buttonSpacing +
     buttonWidth;
   const buttonY = character1Y - buttonHeight - 20;
-
-  drawButton(rock1X, buttonY, buttonWidth, buttonHeight, "R");
-  drawButton(paper1X, buttonY, buttonWidth, buttonHeight, "P");
-  drawButton(scissors1X, buttonY, buttonWidth, buttonHeight, "S");
+  c.fillStyle = "rgba(0, 0, 0, 0.5)";
+  c.fillRect(rock1X, buttonY, scissors1X - rock1X + 50, buttonHeight);
+  c.drawImage(rockImage,rock1X, buttonY, buttonWidth, buttonHeight);
+  c.drawImage(paperImage,paper1X, buttonY, buttonWidth, buttonHeight);
+  c.drawImage(scissorImage,scissors1X, buttonY, buttonWidth, buttonHeight);
 
   const paper2X = character2X + (characterWidth - buttonWidth) / 2;
   const rock2X =
@@ -399,10 +409,11 @@ function drawRPSButtons() {
     buttonWidth / 2 +
     buttonSpacing +
     buttonWidth;
-
-  drawButton(rock2X, buttonY, buttonWidth, buttonHeight, "R");
-  drawButton(paper2X, buttonY, buttonWidth, buttonHeight, "P");
-  drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, "S");
+    c.fillStyle = "rgba(0, 0, 0, 0.5)";
+    c.fillRect(rock2X, buttonY, scissors2X - rock2X + 50, buttonHeight);
+    c.drawImage(rockImage,rock2X, buttonY, buttonWidth, buttonHeight);
+    c.drawImage(paperImage,paper2X, buttonY, buttonWidth, buttonHeight);
+    c.drawImage(scissorImage,scissors2X, buttonY, buttonWidth, buttonHeight);
 }
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
