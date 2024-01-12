@@ -4,16 +4,28 @@ const canvasWidth = 1024;
 const canvasHeight = 576;
 let result;
 const player1IdleFrames = [
-  "girlKnightSprite/Idle (1).png",
-  "girlKnightSprite/Idle (2).png",
-  "girlKnightSprite/Idle (3).png",
-  "girlKnightSprite/Idle (4).png",
-  "girlKnightSprite/Idle (5).png",
-  "girlKnightSprite/Idle (6).png",
-  "girlKnightSprite/Idle (7).png",
-  "girlKnightSprite/Idle (8).png",
-  "girlKnightSprite/Idle (9).png",
-  "girlKnightSprite/Idle (10).png",
+  "girlKnightSprite/Idle (1).png?v=1",
+  "girlKnightSprite/Idle (2).png?v=1",
+  "girlKnightSprite/Idle (3).png?v=1",
+  "girlKnightSprite/Idle (4).png?v=1",
+  "girlKnightSprite/Idle (5).png?v=1",
+  "girlKnightSprite/Idle (6).png?v=1",
+  "girlKnightSprite/Idle (7).png?v=1",
+  "girlKnightSprite/Idle (8).png?v=1",
+  "girlKnightSprite/Idle (9).png?v=1",
+  "girlKnightSprite/Idle (10).png?v=1",
+  
+];
+const player1RunFrames = [
+  "girlKnightSprite/Run (1).png",
+  "girlKnightSprite/Run (2).png",
+  "girlKnightSprite/Run (3).png",
+  "girlKnightSprite/Run (4).png",
+  "girlKnightSprite/Run (5).png",
+  "girlKnightSprite/Run (6).png",
+  "girlKnightSprite/Run (7).png",
+  "girlKnightSprite/Run (8).png",
+  "girlKnightSprite/Run (9).png",
   
 ];
 const player2IdleFrames = [
@@ -42,8 +54,9 @@ const augments = [
 
 let player1IdleFrameIndex = 0;
 
-
 let remainingTime = 15;
+
+
 let player1Choice = null;
 let player2Choice = null;
 
@@ -52,7 +65,7 @@ let player1HP = 100;
 let player2HP = 100;
 
 let currentFrame = 0;
-const frameCount = 15; 
+const frameCount = 7; 
 const frameInterval = 100; 
 
 const characterWidth = 100;
@@ -100,13 +113,65 @@ function drawSquare(x, y, size, color) {
 }
 
 function updateTimer() {
+  // Draw a black circle
+  c.fillStyle = "rgba(0, 0, 0, 0.5)";
+  const circleRadius = 30;
+  c.beginPath();
+  c.arc(canvasWidth / 2, 75, circleRadius, 0, 2 * Math.PI);
+  c.fill();
+
+  // Draw the timer text
   c.fillStyle = "white";
-  c.font = "20px Arial";
-  const timerText = "Time: " + remainingTime + "s";
+  c.font = "24px Arial";
+  const timerText = remainingTime;
   const timerTextWidth = c.measureText(timerText).width;
-  c.fillText(timerText, canvasWidth / 2 - timerTextWidth / 2, 57);
+  c.fillText(timerText, canvasWidth / 2 - timerTextWidth / 2, 83);
+}
+function decreaseTimer() {
+  if (animationPaused === false && remainingTime > 0) {
+    remainingTime--;
+    console.log(remainingTime);
+  }
+  if (remainingTime === 0){
+    animationPaused = true;
+        result = determineWinner();
+  
+        // Adjust HP based on the result
+        if (result === "Player 1 wins!" && player2HP > 0) {
+          player2HP -= 10; // Decrease HP for Player 2
+        } else if (result === "Player 2 wins!" && player1HP > 0) {
+          player1HP -= 10; // Decrease HP for Player 1
+        }
+  
+        // Display the result on the canvas
+        redrawCanvas();
+        drawResult(result);
+        remainingTime = 15;
+        player1Choice = null;
+        player2Choice = null;
+  }
 }
 
+// Set an interval to run decreaseTimer every second
+const timerInterval = setInterval(decreaseTimer, 1000);
+
+if (remainingTime === 0){
+  animationPaused = true;
+      result = determineWinner();
+
+      // Adjust HP based on the result
+      if (result === "Player 1 wins!" && player2HP > 0) {
+        player2HP -= 10; // Decrease HP for Player 2
+      } else if (result === "Player 2 wins!" && player1HP > 0) {
+        player1HP -= 10; // Decrease HP for Player 1
+      }
+
+      // Display the result on the canvas
+      redrawCanvas();
+      drawResult(result);
+      player1Choice = null;
+      player2Choice = null;
+}
 
 for (let i = 0; i < 10; i++) {
   setTimeout(() => {
@@ -168,13 +233,34 @@ canvas.addEventListener("click", function (e) {
   }
 });
 
+let countdownInterval;
+
+function startRoundTimer() {
+  countdownInterval = setInterval(function () {
+    remainingTime--;
+
+    if (remainingTime <= 0) {
+      clearInterval(countdownInterval);
+      // Handle the end of the round, e.g., determine winner, update HP, etc.
+      result = determineWinner();
+      redrawCanvas();
+      drawResult(result);
+      player1Choice = null;
+      player2Choice = null;
+    } else {
+      redrawCanvas();
+      updateTimer();
+    }
+  }, 1000);
+}
+
+
 function drawLeaves() {
   // If animation is paused or augment is shown, don't proceed with leaf animation
   if (animationPaused || augmentShown || !continueClicked) {
     requestAnimationFrame(drawLeaves);
     return;
   }
-
   // Clear the entire canvas
   c.clearRect(0, 0, canvasWidth, canvasHeight);
 
@@ -187,11 +273,7 @@ function drawLeaves() {
 
   player2IdleFrameIndex = (currentFrame % (frameCount * player2IdleFrames.length)) / frameCount;
   character2Image.src = player2IdleFrames[Math.floor(player2IdleFrameIndex)];
-  character2Image.onload = function () {
-    // Draw player 2 sprite
-    c.drawImage(character2Image, -character2X - characterWidth, character2Y, characterWidth, characterHeight);
-  };
-
+ 
 
   for (const leaf of leaves) {
     // Move the leaf down
@@ -221,22 +303,29 @@ function drawLeaves() {
   }
 currentFrame ++;
   // Request the next animation frame
+  updateTimer()
   requestAnimationFrame(drawLeaves);
 }
 
-preloadImages([customImage1,customImage2, ...player1IdleFrames, ...player2IdleFrames,backgroundImage, character1Image, character2Image], drawLeaves());
-// Start the animation
+preloadImages([player1RunFrames,customImage1,customImage2, ...player1IdleFrames, ...player2IdleFrames,backgroundImage, character1Image, character2Image], drawLeaves());
 
+function myCallback() {
+  console.log("All images are loaded!");
+  // Additional code to execute after images are loaded
+}
 
-function preloadImages(images, callback) {
+function preloadImages(images, cal) {
   let loadedImages = 0;
+
+  function imageLoaded() {
+    loadedImages++;
+    if (loadedImages === images.length) {
+      myCallback();
+    }
+  }
+
   images.forEach((image) => {
-    image.onload = () => {
-      loadedImages++;
-      if (loadedImages === images.length) {
-        callback();
-      }
-    };
+    image.onload = imageLoaded;
   });
 }
 function drawAugments() {
@@ -275,11 +364,11 @@ function drawAugments() {
   });
 }
 
-preloadImages([...player1IdleFrames, ...player2IdleFrames,backgroundImage, character1Image, character2Image], setupGame);
+preloadImages([...player1IdleFrames, ...player2IdleFrames,backgroundImage, character1Image, character2Image], setupGame());
 
 function drawRPSButtons() {
-  const rock1X = character1X + (characterWidth - buttonWidth) / 2;
-  const paper1X =
+  const paper1X = character1X + (characterWidth - buttonWidth) / 2;
+  const rock1X =
     character1X +
     characterWidth / 4 -
     buttonWidth / 2 -
@@ -297,8 +386,8 @@ function drawRPSButtons() {
   drawButton(paper1X, buttonY, buttonWidth, buttonHeight, "P");
   drawButton(scissors1X, buttonY, buttonWidth, buttonHeight, "S");
 
-  const rock2X = character2X + (characterWidth - buttonWidth) / 2;
-  const paper2X =
+  const paper2X = character2X + (characterWidth - buttonWidth) / 2;
+  const rock2X =
     character2X +
     characterWidth / 4 -
     buttonWidth / 2 -
@@ -380,9 +469,14 @@ function clearCanvas() {
 
 function setupGame() {
   clearCanvas();
-
   c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
+  player1IdleFrameIndex = (currentFrame % (frameCount * player1IdleFrames.length)) / frameCount;
+  character1Image.src = player1IdleFrames[Math.floor(player1IdleFrameIndex)];
+  
+
+  player2IdleFrameIndex = (currentFrame % (frameCount * player2IdleFrames.length)) / frameCount;
+  character2Image.src = player2IdleFrames[Math.floor(player2IdleFrameIndex)];
   // Draw black trapezoid background for the round number
   const trapezoidHeight = 40;
   const trapezoidTopWidth = 200;
@@ -495,7 +589,6 @@ for (let i = 0; i < 4; i++) {
   // Restore the transformation state
   c.restore();
   drawRPSButtons();
-  updateTimer();
 }
 
 // Call the setup function to initialize the game state
@@ -503,8 +596,16 @@ setupGame();
 
 // Determine the winner based on RPS rules
 function determineWinner() {
+if(player1Choice !== null && player2Choice === null){
+  return 'Player 1 wins!'
+}
+
+if(player1Choice === null && player2Choice !== null){
+  return 'Player 2 wins!'
+}
+
   if (player1Choice === player2Choice) {
-    return "It's a tie!";
+    return "  It is a draw! ";
   } else if (
     (player1Choice === "R" && player2Choice === "S") ||
     (player1Choice === "P" && player2Choice === "R") ||
@@ -519,7 +620,7 @@ function determineWinner() {
 function drawResult(result) {
   c.fillStyle = "Black";
   c.font = "Bold 40px Arial";
-  c.fillText(result, canvasWidth / 2 - 110, canvasHeight / 3);
+  c.fillText(result, canvasWidth / 2.65, canvasHeight / 3);
 }
 
 function redrawCanvas() {
@@ -693,6 +794,7 @@ canvas.addEventListener("click", function (e) {
       // Display the result on the canvas
       redrawCanvas();
       drawResult(result);
+      remainingTime = 15;
       player1Choice = null;
       player2Choice = null;
     }
@@ -759,3 +861,4 @@ const scissors2X =
 drawButton(rock2X, buttonY, buttonWidth, buttonHeight, "R");
 drawButton(paper2X, buttonY, buttonWidth, buttonHeight, "P");
 drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, "S");
+
