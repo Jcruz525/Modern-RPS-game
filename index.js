@@ -2,6 +2,7 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 const canvasWidth = 1024;
 const canvasHeight = 576;
+document.getElementById('myCanvas').onload = handleCanvasLoad;
 let result;
 const player1IdleFrames = [
   "girlKnightSprite/Idle (1).png?v=1",
@@ -78,8 +79,11 @@ const character2X = (3 * canvasWidth) / 4 - characterWidth / 2;
 const character2Y = canvasHeight - 4.5 * characterHeight;
 
 const buttonWidth = 40;
-const buttonHeight = 25;
+const buttonHeight = 40;
 const buttonSpacing = 15; 
+
+const customImage1 = new Image();
+customImage1.src = "girlKnightSprite/profile-img.png"; 
 
 const rockImage = new Image();
 rockImage.src = "/icons8-rock-48.png"; 
@@ -89,9 +93,6 @@ paperImage.src = "/icons8-paper-100.png";
 
 const scissorImage = new Image();
 scissorImage.src = "/icons8-scissors-64.png"; 
-
-const customImage1 = new Image();
-customImage1.src = "girlKnightSprite/profile-img.png"; // Replace with the actual path to your image
 
 const customImage2 = new Image();
 customImage2.src = "redhatSprite/profile-img-2.png";
@@ -220,7 +221,7 @@ canvas.addEventListener("click", function (e) {
   const buttonX = canvasWidth / 2 - 50;
   const buttonY = canvasHeight / 2.5;
   const buttonWidth = 100;
-  const buttonHeight = 30;
+  const buttonHeight = 40;
 
   if (
     mouseX >= buttonX &&
@@ -263,6 +264,15 @@ function startRoundTimer() {
   }, 1000);
 }
 
+function handleCanvasLoad() {
+  // Get the canvas element
+  var canvas = document.getElementById('myCanvas');
+
+  drawLeaves()
+
+  // Show the canvas once it's loaded
+  canvas.style.display = 'flex';
+}
 
 function drawLeaves() {
   // If animation is paused or augment is shown, don't proceed with leaf animation
@@ -274,14 +284,13 @@ function drawLeaves() {
   c.clearRect(0, 0, canvasWidth, canvasHeight);
 
   // Draw the background and other elements
-  setupGame();
-
-  player1IdleFrameIndex = (currentFrame % (frameCount * player1IdleFrames.length)) / frameCount;
-  character1Image.src = player1IdleFrames[Math.floor(player1IdleFrameIndex)];
+  setupGame()
+  //player1IdleFrameIndex = (currentFrame % (frameCount * player1IdleFrames.length)) / frameCount;
+  //character1Image.src = player1IdleFrames[Math.floor(player1IdleFrameIndex)];
   
 
-  player2IdleFrameIndex = (currentFrame % (frameCount * player2IdleFrames.length)) / frameCount;
-  character2Image.src = player2IdleFrames[Math.floor(player2IdleFrameIndex)];
+  //player2IdleFrameIndex = (currentFrame % (frameCount * player2IdleFrames.length)) / frameCount;
+  //character2Image.src = player2IdleFrames[Math.floor(player2IdleFrameIndex)];
  
 
   for (const leaf of leaves) {
@@ -311,7 +320,7 @@ function drawLeaves() {
     }
   }
 currentFrame ++;
-  // Request the next animation frame
+ 
   updateTimer()
   requestAnimationFrame(drawLeaves);
 }
@@ -482,12 +491,6 @@ function setupGame() {
   clearCanvas();
   c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-  player1IdleFrameIndex = (currentFrame % (frameCount * player1IdleFrames.length)) / frameCount;
-  character1Image.src = player1IdleFrames[Math.floor(player1IdleFrameIndex)];
-  
-
-  player2IdleFrameIndex = (currentFrame % (frameCount * player2IdleFrames.length)) / frameCount;
-  character2Image.src = player2IdleFrames[Math.floor(player2IdleFrameIndex)];
   // Draw black trapezoid background for the round number
   const trapezoidHeight = 40;
   const trapezoidTopWidth = 200;
@@ -574,7 +577,6 @@ for (let i = 0; i < 4; i++) {
 }
   const characterWidth = 100;
   const characterHeight = 100;
-
   c.drawImage(
     character1Image,
     character1X,
@@ -591,7 +593,7 @@ for (let i = 0; i < 4; i++) {
   // Draw player 2 with flipped coordinates
   c.drawImage(
     character2Image,
-    -character2X - characterWidth,
+    -character2X - characterWidth -12.25,
     character2Y,
     characterWidth,
     characterHeight
@@ -745,7 +747,7 @@ for (let i = 0; i < 4; i++) {
   // Draw player 2 with flipped coordinates
   c.drawImage(
     character2Image,
-    -character2X - characterWidth,
+    -character2X - characterWidth - 12.25,
     character2Y,
     characterWidth,
     characterHeight
