@@ -116,21 +116,20 @@ let animationPaused = false;
 let augmentShown = false; 
 
 
-// Function to draw a square
 function drawSquare(x, y, size, color) {
   c.fillStyle = color;
   c.fillRect(x, y, size, size);
 }
 
 function updateTimer() {
-  // Draw a black circle
+
   c.fillStyle = "rgba(0, 0, 0, 0.5)";
   const circleRadius = 30;
   c.beginPath();
   c.arc(canvasWidth / 2, 75, circleRadius, 0, 2 * Math.PI);
   c.fill();
 
-  // Draw the timer text
+  
   c.fillStyle = "white";
   c.font = "24px Arial";
   const timerText = remainingTime;
@@ -146,14 +145,14 @@ function decreaseTimer() {
     animationPaused = true;
         result = determineWinner();
   
-        // Adjust HP based on the result
+        
         if (result === "Player 1 wins!" && player2HP > 0) {
-          player2HP -= 10; // Decrease HP for Player 2
+          player2HP -= 10; 
         } else if (result === "Player 2 wins!" && player1HP > 0) {
-          player1HP -= 10; // Decrease HP for Player 1
+          player1HP -= 10; 
         }
   
-        // Display the result on the canvas
+        
         redrawCanvas();
         drawResult(result);
         remainingTime = 15;
@@ -162,21 +161,21 @@ function decreaseTimer() {
   }
 }
 
-// Set an interval to run decreaseTimer every second
+
 const timerInterval = setInterval(decreaseTimer, 1000);
 
 if (remainingTime === 0){
   animationPaused = true;
       result = determineWinner();
 
-      // Adjust HP based on the result
+      
       if (result === "Player 1 wins!" && player2HP > 0) {
-        player2HP -= 10; // Decrease HP for Player 2
+        player2HP -= 10; 
       } else if (result === "Player 2 wins!" && player1HP > 0) {
-        player1HP -= 10; // Decrease HP for Player 1
+        player1HP -= 10; 
       }
 
-      // Display the result on the canvas
+  
       redrawCanvas();
       drawResult(result);
       player1Choice = null;
@@ -192,7 +191,7 @@ for (let i = 0; i < 10; i++) {
       onGround: false, 
       opacity: 1.0, 
     });
-  }, i * 500); // Adjust the delay (500 milliseconds in this example)
+  }, i * 500); 
 }
 
 function drawContinueButton() {
@@ -200,11 +199,11 @@ function drawContinueButton() {
   const buttonY = canvasHeight / 2.5;
 
   
-  // Draw button background
+
   c.fillStyle = "black";
   c.fillRect(buttonX, buttonY, 100, 30);
 
-  // Draw button text
+
   c.fillStyle = "white";
   c.font = "16px Arial";
   c.fillText("Continue", buttonX + 20, buttonY + 20);
@@ -212,12 +211,12 @@ function drawContinueButton() {
 
 let continueClicked = true;
 
-// Event listener for "Continue" button click
+
 canvas.addEventListener("click", function (e) {
   const mouseX = e.clientX - canvas.getBoundingClientRect().left;
   const mouseY = e.clientY - canvas.getBoundingClientRect().top;
 
-  // Check if the click is within the "Continue" button area
+ 
   const buttonX = canvasWidth / 2 - 50;
   const buttonY = canvasHeight / 2.5;
   const buttonWidth = 100;
@@ -231,14 +230,14 @@ canvas.addEventListener("click", function (e) {
   ) {
     continueClicked = true;
     animationPaused = false
-    // Update round count when "Continue" is clicked
+ 
     roundCount++;
 
-    // Reset choices for the next round
+    
     player1Choice = null;
     player2Choice = null;
 
-    // Draw the next round
+    
     redrawCanvas();
   }
 });
@@ -251,7 +250,7 @@ function startRoundTimer() {
 
     if (remainingTime <= 0) {
       clearInterval(countdownInterval);
-      // Handle the end of the round, e.g., determine winner, update HP, etc.
+     
       result = determineWinner();
       redrawCanvas();
       drawResult(result);
@@ -265,54 +264,54 @@ function startRoundTimer() {
 }
 
 function handleCanvasLoad() {
-  // Get the canvas element
+ 
   var canvas = document.getElementById('myCanvas');
 
   drawLeaves()
 
-  // Show the canvas once it's loaded
+  
   canvas.style.display = 'flex';
 }
 
 function drawLeaves() {
-  // If animation is paused or augment is shown, don't proceed with leaf animation
+ 
   if (animationPaused || augmentShown || !continueClicked) {
     requestAnimationFrame(drawLeaves);
     return;
   }
-  // Clear the entire canvas
+
   c.clearRect(0, 0, canvasWidth, canvasHeight);
 
-  // Draw the background and other elements
+ 
   setupGame()
-  //player1IdleFrameIndex = (currentFrame % (frameCount * player1IdleFrames.length)) / frameCount;
-  //character1Image.src = player1IdleFrames[Math.floor(player1IdleFrameIndex)];
+  player1IdleFrameIndex = (currentFrame % (frameCount * player1IdleFrames.length)) / frameCount;
+  character1Image.src = player1IdleFrames[Math.floor(player1IdleFrameIndex)];
   
 
-  //player2IdleFrameIndex = (currentFrame % (frameCount * player2IdleFrames.length)) / frameCount;
-  //character2Image.src = player2IdleFrames[Math.floor(player2IdleFrameIndex)];
+  player2IdleFrameIndex = (currentFrame % (frameCount * player2IdleFrames.length)) / frameCount;
+  character2Image.src = player2IdleFrames[Math.floor(player2IdleFrameIndex)];
  
 
   for (const leaf of leaves) {
-    // Move the leaf down
+  
     leaf.y += leaf.speed;
 
-    // Check if the leaf has reached the ground
+    
     if (leaf.y + 20 >= groundLevel && !leaf.onGround) {
-      leaf.y = groundLevel - 20; // Adjust the position to just above the ground level
+      leaf.y = groundLevel - 20; 
       leaf.onGround = true;
     }
 
     c.save();
-    c.translate(leaf.x + 10, leaf.y + 10); // Adjust the center point of rotation
-    const rotationSpeed = 5; // Adjust the rotation speed as needed
+    c.translate(leaf.x + 10, leaf.y + 10); 
+    const rotationSpeed = 5; 
     c.rotate(
       (Math.PI / 180) * (Math.random() * rotationSpeed - rotationSpeed / 2)
-    ); // Random rotation angle within a smaller range
-    c.drawImage(leafImage, -10, -10, 20, 20); // Adjust the size as needed
+    ); 
+    c.drawImage(leafImage, -10, -10, 20, 20);
     c.restore();
 
-    // If the leaf is on the ground, reset its position
+    
     if (leaf.onGround) {
       leaf.y = 0;
       leaf.onGround = false;
@@ -329,7 +328,7 @@ preloadImages([player1RunFrames,customImage1,customImage2, ...player1IdleFrames,
 
 function myCallback() {
   console.log("All images are loaded!");
-  // Additional code to execute after images are loaded
+  
 }
 
 function preloadImages(images, cal) {
