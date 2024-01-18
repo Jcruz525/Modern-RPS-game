@@ -354,27 +354,27 @@ function drawAugments() {
   const startX = canvasWidth / 2 - totalWidth / 2;
   const startY = canvasHeight / 2 - augmentHeight / 0.9;
 
-  // Randomly shuffle the augments array
+
   const shuffledAugments = [...augments].sort(() => Math.random() - 0.5);
 
-  // Select the first three augments
+ 
   const chosenAugments = shuffledAugments.slice(0, 3);
 
-  // Draw each augment
+ 
   chosenAugments.forEach((augment, index) => {
     const augmentX = startX + index * (augmentWidth + augmentSpacing);
     const augmentY = startY;
 
-    // Draw augment rectangle
+  
     c.fillStyle = "rgba(0, 0, 0, 0.5)";
     c.fillRect(augmentX, augmentY, augmentWidth, augmentHeight);
 
-    // Draw augment name at the top
+   
     c.fillStyle = "white";
     c.font = "16px Arial";
     c.fillText(augment.name, augmentX + augmentWidth / 2 - 40, augmentY + 20);
 
-    // Draw augment description underneath
+    
     c.fillStyle = "white";
     c.font = "12px Arial";
     c.fillText(augment.description, augmentX + 10, augmentY + 50);
@@ -443,10 +443,10 @@ function drawButton(x, y, width, height, text) {
 function drawHPBar(player, hp, x, y, color) {
   const barWidth = 200;
   const barHeight = 15;
-  const textPadding = 10; // Adjust this value for padding between text and bar
+  const textPadding = 10; 
   const borderWidth = 3;
 
-  // Draw player name above the HP bar
+  
   c.fillStyle = "black";
   c.font = "12px Arial";
   c.fillText(
@@ -455,7 +455,7 @@ function drawHPBar(player, hp, x, y, color) {
     y - textPadding
   );
 
-  // Draw HP bar background
+  
   c.fillStyle = "darkgrey";
   c.fillRect(x, y, barWidth, barHeight);
 
@@ -463,7 +463,7 @@ function drawHPBar(player, hp, x, y, color) {
   const currentWidth = (hp / 100) * barWidth;
   c.fillRect(x, y, currentWidth, barHeight);
 
-  // Draw HP value inline with the HP bar
+ 
   c.fillStyle = "black";
   if (color === "blue") {
     c.fillText("HP: " + hp, x + barWidth + textPadding, y + barHeight / 2 + 5);
@@ -474,9 +474,9 @@ function drawHPBar(player, hp, x, y, color) {
       y + barHeight / 2 + 5
     );
   }
-  // Draw HP bar border
-  c.strokeStyle = "black"; // Set the border color
-  c.lineWidth = borderWidth; // Set the border width
+ 
+  c.strokeStyle = "black"; 
+  c.lineWidth = borderWidth;
   c.strokeRect(x, y, barWidth, barHeight);
 }
 
@@ -490,7 +490,7 @@ function setupGame() {
   clearCanvas();
   c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-  // Draw black trapezoid background for the round number
+  
   const trapezoidHeight = 40;
   const trapezoidTopWidth = 200;
   const trapezoidBottomWidth = 400;
