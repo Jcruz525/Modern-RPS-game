@@ -2,7 +2,7 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 const canvasWidth = 1024;
 const canvasHeight = 576;
-document.getElementById('myCanvas').onload = handleCanvasLoad;
+document.getElementById("myCanvas").onload = handleCanvasLoad;
 let result;
 const player1IdleFrames = [
   "girlKnightSprite/Idle (1).png?v=1",
@@ -15,7 +15,6 @@ const player1IdleFrames = [
   "girlKnightSprite/Idle (8).png?v=1",
   "girlKnightSprite/Idle (9).png?v=1",
   "girlKnightSprite/Idle (10).png?v=1",
-  
 ];
 const player1RunFrames = [
   "girlKnightSprite/Run (1).png",
@@ -27,7 +26,6 @@ const player1RunFrames = [
   "girlKnightSprite/Run (7).png",
   "girlKnightSprite/Run (8).png",
   "girlKnightSprite/Run (9).png",
-  
 ];
 const player2IdleFrames = [
   "redhatSprite/Idle (1).png",
@@ -40,7 +38,6 @@ const player2IdleFrames = [
   "redhatSprite/Idle (8).png",
   "redhatSprite/Idle (9).png",
   "redhatSprite/Idle (10).png",
-  
 ];
 
 const augments = [
@@ -50,13 +47,12 @@ const augments = [
   { name: "Augment 1", description: "Description 1" },
   { name: "Augment 2", description: "Description 2" },
   { name: "Augment 3", description: "Description 3" },
-  // Add more augments as needed
+
 ];
 
 let player1IdleFrameIndex = 0;
 
 let remainingTime = 15;
-
 
 let player1Choice = null;
 let player2Choice = null;
@@ -66,8 +62,8 @@ let player1HP = 100;
 let player2HP = 100;
 
 let currentFrame = 0;
-const frameCount = 7; 
-const frameInterval = 100; 
+const frameCount = 7;
+const frameInterval = 100;
 
 const characterWidth = 100;
 const characterHeight = 50;
@@ -80,19 +76,19 @@ const character2Y = canvasHeight - 4.5 * characterHeight;
 
 const buttonWidth = 40;
 const buttonHeight = 40;
-const buttonSpacing = 15; 
+const buttonSpacing = 15;
 
 const customImage1 = new Image();
-customImage1.src = "girlKnightSprite/profile-img.png"; 
+customImage1.src = "girlKnightSprite/profile-img.png";
 
 const rockImage = new Image();
-rockImage.src = "/icons8-rock-48.png"; 
+rockImage.src = "/icons8-rock-48.png";
 
 const paperImage = new Image();
 paperImage.src = "/icons8-paper-100.png";
 
 const scissorImage = new Image();
-scissorImage.src = "/icons8-scissors-64.png"; 
+scissorImage.src = "/icons8-scissors-64.png";
 
 const customImage2 = new Image();
 customImage2.src = "redhatSprite/profile-img-2.png";
@@ -106,15 +102,14 @@ character1Image.src = player1IdleFrames[0];
 const character2Image = new Image();
 character2Image.src = player2IdleFrames[0];
 
-const groundLevel = canvasHeight - 100; 
+const groundLevel = canvasHeight - 100;
 
 const leafImage = new Image();
-leafImage.src = "leaf-autumn-fall-svgrepo-com.svg"; 
+leafImage.src = "leaf-autumn-fall-svgrepo-com.svg";
 
 const leaves = [];
 let animationPaused = false;
-let augmentShown = false; 
-
+let augmentShown = false;
 
 function drawSquare(x, y, size, color) {
   c.fillStyle = color;
@@ -122,14 +117,12 @@ function drawSquare(x, y, size, color) {
 }
 
 function updateTimer() {
-
   c.fillStyle = "rgba(0, 0, 0, 0.5)";
   const circleRadius = 30;
   c.beginPath();
   c.arc(canvasWidth / 2, 75, circleRadius, 0, 2 * Math.PI);
   c.fill();
 
-  
   c.fillStyle = "white";
   c.font = "24px Arial";
   const timerText = remainingTime;
@@ -141,68 +134,60 @@ function decreaseTimer() {
     remainingTime--;
     console.log(remainingTime);
   }
-  if (remainingTime === 0){
+  if (remainingTime === 0) {
     animationPaused = true;
-        result = determineWinner();
-  
-        
-        if (result === "Player 1 wins!" && player2HP > 0) {
-          player2HP -= 10; 
-        } else if (result === "Player 2 wins!" && player1HP > 0) {
-          player1HP -= 10; 
-        }
-  
-        
-        redrawCanvas();
-        drawResult(result);
-        remainingTime = 15;
-        player1Choice = null;
-        player2Choice = null;
+    result = determineWinner();
+
+    if (result === "Player 1 wins!" && player2HP > 0) {
+      player2HP -= 10;
+    } else if (result === "Player 2 wins!" && player1HP > 0) {
+      player1HP -= 10;
+    }
+
+    redrawCanvas();
+    drawResult(result);
+    remainingTime = 15;
+    player1Choice = null;
+    player2Choice = null;
   }
 }
 
-
 const timerInterval = setInterval(decreaseTimer, 1000);
 
-if (remainingTime === 0){
+if (remainingTime === 0) {
   animationPaused = true;
-      result = determineWinner();
+  result = determineWinner();
 
-      
-      if (result === "Player 1 wins!" && player2HP > 0) {
-        player2HP -= 10; 
-      } else if (result === "Player 2 wins!" && player1HP > 0) {
-        player1HP -= 10; 
-      }
+  if (result === "Player 1 wins!" && player2HP > 0) {
+    player2HP -= 10;
+  } else if (result === "Player 2 wins!" && player1HP > 0) {
+    player1HP -= 10;
+  }
 
-  
-      redrawCanvas();
-      drawResult(result);
-      player1Choice = null;
-      player2Choice = null;
+  redrawCanvas();
+  drawResult(result);
+  player1Choice = null;
+  player2Choice = null;
 }
 
 for (let i = 0; i < 10; i++) {
   setTimeout(() => {
     leaves.push({
       x: Math.random() * canvasWidth,
-      y: 0, 
-      speed: Math.random() * (4 - 1) + 2, 
-      onGround: false, 
-      opacity: 1.0, 
+      y: 0,
+      speed: Math.random() * (4 - 1) + 2,
+      onGround: false,
+      opacity: 1.0,
     });
-  }, i * 500); 
+  }, i * 500);
 }
 
 function drawContinueButton() {
   const buttonX = canvasWidth / 2 - 50;
   const buttonY = canvasHeight / 2.5;
 
-  
-
   c.fillStyle = "black";
   c.fillRect(buttonX, buttonY, 100, 30);
-
 
   c.fillStyle = "white";
   c.font = "16px Arial";
@@ -211,12 +196,10 @@ function drawContinueButton() {
 
 let continueClicked = true;
 
-
 canvas.addEventListener("click", function (e) {
   const mouseX = e.clientX - canvas.getBoundingClientRect().left;
   const mouseY = e.clientY - canvas.getBoundingClientRect().top;
 
- 
   const buttonX = canvasWidth / 2 - 50;
   const buttonY = canvasHeight / 2.5;
   const buttonWidth = 100;
@@ -229,15 +212,13 @@ canvas.addEventListener("click", function (e) {
     mouseY <= buttonY + buttonHeight
   ) {
     continueClicked = true;
-    animationPaused = false
- 
+    animationPaused = false;
+
     roundCount++;
 
-    
     player1Choice = null;
     player2Choice = null;
 
-    
     redrawCanvas();
   }
 });
@@ -250,7 +231,7 @@ function startRoundTimer() {
 
     if (remainingTime <= 0) {
       clearInterval(countdownInterval);
-     
+
       result = determineWinner();
       redrawCanvas();
       drawResult(result);
@@ -264,17 +245,14 @@ function startRoundTimer() {
 }
 
 function handleCanvasLoad() {
- 
-  var canvas = document.getElementById('myCanvas');
+  var canvas = document.getElementById("myCanvas");
 
-  drawLeaves()
+  drawLeaves();
 
-  
-  canvas.style.display = 'flex';
+  canvas.style.display = "flex";
 }
 
 function drawLeaves() {
- 
   if (animationPaused || augmentShown || !continueClicked) {
     requestAnimationFrame(drawLeaves);
     return;
@@ -282,53 +260,60 @@ function drawLeaves() {
 
   c.clearRect(0, 0, canvasWidth, canvasHeight);
 
- 
-  setupGame()
-  player1IdleFrameIndex = (currentFrame % (frameCount * player1IdleFrames.length)) / frameCount;
+  setupGame();
+  player1IdleFrameIndex =
+    (currentFrame % (frameCount * player1IdleFrames.length)) / frameCount;
   character1Image.src = player1IdleFrames[Math.floor(player1IdleFrameIndex)];
-  
 
-  player2IdleFrameIndex = (currentFrame % (frameCount * player2IdleFrames.length)) / frameCount;
+  player2IdleFrameIndex =
+    (currentFrame % (frameCount * player2IdleFrames.length)) / frameCount;
   character2Image.src = player2IdleFrames[Math.floor(player2IdleFrameIndex)];
- 
 
   for (const leaf of leaves) {
-  
     leaf.y += leaf.speed;
 
-    
     if (leaf.y + 20 >= groundLevel && !leaf.onGround) {
-      leaf.y = groundLevel - 20; 
+      leaf.y = groundLevel - 20;
       leaf.onGround = true;
     }
 
     c.save();
-    c.translate(leaf.x + 10, leaf.y + 10); 
-    const rotationSpeed = 5; 
+    c.translate(leaf.x + 10, leaf.y + 10);
+    const rotationSpeed = 5;
     c.rotate(
       (Math.PI / 180) * (Math.random() * rotationSpeed - rotationSpeed / 2)
-    ); 
+    );
     c.drawImage(leafImage, -10, -10, 20, 20);
     c.restore();
 
-    
     if (leaf.onGround) {
       leaf.y = 0;
       leaf.onGround = false;
       leaf.x = Math.random() * canvasWidth;
     }
   }
-currentFrame ++;
- 
-  updateTimer()
+  currentFrame++;
+
+  updateTimer();
   requestAnimationFrame(drawLeaves);
 }
 
-preloadImages([player1RunFrames,customImage1,customImage2, ...player1IdleFrames, ...player2IdleFrames,backgroundImage, character1Image, character2Image], drawLeaves());
+preloadImages(
+  [
+    player1RunFrames,
+    customImage1,
+    customImage2,
+    ...player1IdleFrames,
+    ...player2IdleFrames,
+    backgroundImage,
+    character1Image,
+    character2Image,
+  ],
+  drawLeaves()
+);
 
 function myCallback() {
   console.log("All images are loaded!");
-  
 }
 
 function preloadImages(images, cal) {
@@ -354,34 +339,37 @@ function drawAugments() {
   const startX = canvasWidth / 2 - totalWidth / 2;
   const startY = canvasHeight / 2 - augmentHeight / 0.9;
 
-
   const shuffledAugments = [...augments].sort(() => Math.random() - 0.5);
 
- 
   const chosenAugments = shuffledAugments.slice(0, 3);
 
- 
   chosenAugments.forEach((augment, index) => {
     const augmentX = startX + index * (augmentWidth + augmentSpacing);
     const augmentY = startY;
 
-  
     c.fillStyle = "rgba(0, 0, 0, 0.5)";
     c.fillRect(augmentX, augmentY, augmentWidth, augmentHeight);
 
-   
     c.fillStyle = "white";
     c.font = "16px Arial";
     c.fillText(augment.name, augmentX + augmentWidth / 2 - 40, augmentY + 20);
 
-    
     c.fillStyle = "white";
     c.font = "12px Arial";
     c.fillText(augment.description, augmentX + 10, augmentY + 50);
   });
 }
 
-preloadImages([...player1IdleFrames, ...player2IdleFrames,backgroundImage, character1Image, character2Image], setupGame());
+preloadImages(
+  [
+    ...player1IdleFrames,
+    ...player2IdleFrames,
+    backgroundImage,
+    character1Image,
+    character2Image,
+  ],
+  setupGame()
+);
 
 function drawRPSButtons() {
   const paper1X = character1X + (characterWidth - buttonWidth) / 2;
@@ -400,9 +388,9 @@ function drawRPSButtons() {
   const buttonY = character1Y - buttonHeight - 20;
   c.fillStyle = "rgba(0, 0, 0, 0.5)";
   c.fillRect(rock1X, buttonY, scissors1X - rock1X + 50, buttonHeight);
-  c.drawImage(rockImage,rock1X, buttonY, buttonWidth, buttonHeight);
-  c.drawImage(paperImage,paper1X, buttonY, buttonWidth, buttonHeight);
-  c.drawImage(scissorImage,scissors1X, buttonY, buttonWidth, buttonHeight);
+  c.drawImage(rockImage, rock1X, buttonY, buttonWidth, buttonHeight);
+  c.drawImage(paperImage, paper1X, buttonY, buttonWidth, buttonHeight);
+  c.drawImage(scissorImage, scissors1X, buttonY, buttonWidth, buttonHeight);
 
   const paper2X = character2X + (characterWidth - buttonWidth) / 2;
   const rock2X =
@@ -417,11 +405,11 @@ function drawRPSButtons() {
     buttonWidth / 2 +
     buttonSpacing +
     buttonWidth;
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillRect(rock2X, buttonY, scissors2X - rock2X + 50, buttonHeight);
-    c.drawImage(rockImage,rock2X, buttonY, buttonWidth, buttonHeight);
-    c.drawImage(paperImage,paper2X, buttonY, buttonWidth, buttonHeight);
-    c.drawImage(scissorImage,scissors2X, buttonY, buttonWidth, buttonHeight);
+  c.fillStyle = "rgba(0, 0, 0, 0.5)";
+  c.fillRect(rock2X, buttonY, scissors2X - rock2X + 50, buttonHeight);
+  c.drawImage(rockImage, rock2X, buttonY, buttonWidth, buttonHeight);
+  c.drawImage(paperImage, paper2X, buttonY, buttonWidth, buttonHeight);
+  c.drawImage(scissorImage, scissors2X, buttonY, buttonWidth, buttonHeight);
 }
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
@@ -443,10 +431,9 @@ function drawButton(x, y, width, height, text) {
 function drawHPBar(player, hp, x, y, color) {
   const barWidth = 200;
   const barHeight = 15;
-  const textPadding = 10; 
+  const textPadding = 10;
   const borderWidth = 3;
 
-  
   c.fillStyle = "black";
   c.font = "12px Arial";
   c.fillText(
@@ -455,7 +442,6 @@ function drawHPBar(player, hp, x, y, color) {
     y - textPadding
   );
 
-  
   c.fillStyle = "darkgrey";
   c.fillRect(x, y, barWidth, barHeight);
 
@@ -463,7 +449,6 @@ function drawHPBar(player, hp, x, y, color) {
   const currentWidth = (hp / 100) * barWidth;
   c.fillRect(x, y, currentWidth, barHeight);
 
- 
   c.fillStyle = "black";
   if (color === "blue") {
     c.fillText("HP: " + hp, x + barWidth + textPadding, y + barHeight / 2 + 5);
@@ -474,8 +459,8 @@ function drawHPBar(player, hp, x, y, color) {
       y + barHeight / 2 + 5
     );
   }
- 
-  c.strokeStyle = "black"; 
+
+  c.strokeStyle = "black";
   c.lineWidth = borderWidth;
   c.strokeRect(x, y, barWidth, barHeight);
 }
@@ -490,7 +475,6 @@ function setupGame() {
   clearCanvas();
   c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-  
   const trapezoidHeight = 40;
   const trapezoidTopWidth = 200;
   const trapezoidBottomWidth = 400;
@@ -523,57 +507,63 @@ function setupGame() {
   drawHPBar("Player 1", player1HP, 10, 30, "blue");
   drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "green");
 
-  // Draw squares on the bottom left
-for (let i = 0; i < 4; i++) {
-  const squareX = i * 75 + 30; // Adjust the distance between squares
-  const squareY = canvasHeight - 75; // Adjust the Y position
-  const squareSize = 50; // Adjust the size of the square
-  const squareColor = "red"; // Adjust the color of the square
-  if (i === 0) {
-    // Draw image instead of red square for the leftmost square
-    const borderWidth = 3;
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillRect(squareX, squareY, squareSize, squareSize);
-    c.drawImage(customImage1, squareX, squareY, squareSize, squareSize);
-    c.strokeStyle = "black";
+  
+  for (let i = 0; i < 4; i++) {
+    const squareX = i * 75 + 30;
+    const squareY = canvasHeight - 75 
+    const squareSize = 50; 
+    const squareColor = "red";
+    if (i === 0) {
+      // Draw image instead of red square for the leftmost square
+      const borderWidth = 3;
+      c.fillStyle = "rgba(0, 0, 0, 0.5)";
+      c.fillRect(squareX, squareY, squareSize, squareSize);
+      c.drawImage(customImage1, squareX, squareY, squareSize, squareSize);
+      c.strokeStyle = "black";
       c.lineWidth = borderWidth;
       c.strokeRect(squareX, squareY, squareSize, squareSize);
-  } else {
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillRect(squareX, squareY, squareSize, squareSize);
+    } else {
+      c.fillStyle = "rgba(0, 0, 0, 0.5)";
+      c.fillRect(squareX, squareY, squareSize, squareSize);
+    }
   }
-}
 
-// Draw squares on the bottom right
-for (let i = 0; i < 4; i++) {
-  const squareX = canvasWidth - 50 - i * 75 - 30 ; // Adjust the distance between squares
-  const squareY = canvasHeight - 75; // Adjust the Y position
-  const squareSize = 50; // Adjust the size of the square
+  // Draw squares on the bottom right
+  for (let i = 0; i < 4; i++) {
+    const squareX = canvasWidth - 50 - i * 75 - 30; // Adjust the distance between squares
+    const squareY = canvasHeight - 75; // Adjust the Y position
+    const squareSize = 50; // Adjust the size of the square
 
-  if (i === 0) {
-    // Draw black border around the horizontally flipped image for Player 2
-    const borderWidth = 3;
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillRect(squareX, squareY, squareSize, squareSize);
-    c.save();
-    // Flip horizontally by scaling the x-axis by -1
-    c.scale(-1, 1);
-  
-    c.drawImage(customImage2, -squareX - squareSize, squareY, squareSize, squareSize);
-    
-    // Reset the transformation state
-    c.restore();
+    if (i === 0) {
+      // Draw black border around the horizontally flipped image for Player 2
+      const borderWidth = 3;
+      c.fillStyle = "rgba(0, 0, 0, 0.5)";
+      c.fillRect(squareX, squareY, squareSize, squareSize);
+      c.save();
+      // Flip horizontally by scaling the x-axis by -1
+      c.scale(-1, 1);
 
-    c.strokeStyle = "black";
-    c.lineWidth = borderWidth;
+      c.drawImage(
+        customImage2,
+        -squareX - squareSize,
+        squareY,
+        squareSize,
+        squareSize
+      );
 
-    // Draw the border using the flipped coordinates
-    c.strokeRect(squareX + 50 , squareY, -squareSize, squareSize);
-  } else {
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillRect(squareX, squareY, squareSize, squareSize);
+      // Reset the transformation state
+      c.restore();
+
+      c.strokeStyle = "black";
+      c.lineWidth = borderWidth;
+
+      // Draw the border using the flipped coordinates
+      c.strokeRect(squareX + 50, squareY, -squareSize, squareSize);
+    } else {
+      c.fillStyle = "rgba(0, 0, 0, 0.5)";
+      c.fillRect(squareX, squareY, squareSize, squareSize);
+    }
   }
-}
   const characterWidth = 100;
   const characterHeight = 100;
   c.drawImage(
@@ -592,7 +582,7 @@ for (let i = 0; i < 4; i++) {
   // Draw player 2 with flipped coordinates
   c.drawImage(
     character2Image,
-    -character2X - characterWidth -12.25,
+    -character2X - characterWidth - 12.25,
     character2Y,
     characterWidth,
     characterHeight
@@ -608,13 +598,13 @@ setupGame();
 
 // Determine the winner based on RPS rules
 function determineWinner() {
-if(player1Choice !== null && player2Choice === null){
-  return 'Player 1 wins!'
-}
+  if (player1Choice !== null && player2Choice === null) {
+    return "Player 1 wins!";
+  }
 
-if(player1Choice === null && player2Choice !== null){
-  return 'Player 2 wins!'
-}
+  if (player1Choice === null && player2Choice !== null) {
+    return "Player 2 wins!";
+  }
 
   if (player1Choice === player2Choice) {
     return "  It is a draw! ";
@@ -649,7 +639,6 @@ function redrawCanvas() {
   if (result) {
     drawResult(result);
   }
-  
 
   c.fillStyle = "rgba(0, 0, 0, 0.5)";
   c.beginPath();
@@ -680,57 +669,63 @@ function redrawCanvas() {
   drawHPBar("Player 1", player1HP, 10, 30, "blue");
   drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "green");
 
-    // Draw squares on the bottom left
-for (let i = 0; i < 4; i++) {
-  const squareX = i * 75 + 30; // Adjust the distance between squares
-  const squareY = canvasHeight - 75; // Adjust the Y position
-  const squareSize = 50; // Adjust the size of the square
-  const squareColor = "red"; // Adjust the color of the square
-  if (i === 0) {
-    // Draw image instead of red square for the leftmost square
-    const borderWidth = 3;
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillRect(squareX, squareY, squareSize, squareSize);
-    c.drawImage(customImage1, squareX, squareY, squareSize, squareSize);
-    c.strokeStyle = "black";
+  // Draw squares on the bottom left
+  for (let i = 0; i < 4; i++) {
+    const squareX = i * 75 + 30; // Adjust the distance between squares
+    const squareY = canvasHeight - 75; // Adjust the Y position
+    const squareSize = 50; // Adjust the size of the square
+    const squareColor = "red"; // Adjust the color of the square
+    if (i === 0) {
+      // Draw image instead of red square for the leftmost square
+      const borderWidth = 3;
+      c.fillStyle = "rgba(0, 0, 0, 0.5)";
+      c.fillRect(squareX, squareY, squareSize, squareSize);
+      c.drawImage(customImage1, squareX, squareY, squareSize, squareSize);
+      c.strokeStyle = "black";
       c.lineWidth = borderWidth;
       c.strokeRect(squareX, squareY, squareSize, squareSize);
-  } else {
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillRect(squareX, squareY, squareSize, squareSize);
+    } else {
+      c.fillStyle = "rgba(0, 0, 0, 0.5)";
+      c.fillRect(squareX, squareY, squareSize, squareSize);
+    }
   }
-}
 
-// Draw squares on the bottom right
-for (let i = 0; i < 4; i++) {
-  const squareX = canvasWidth - 50 - i * 75 - 30 ; // Adjust the distance between squares
-  const squareY = canvasHeight - 75; // Adjust the Y position
-  const squareSize = 50; // Adjust the size of the square
+  // Draw squares on the bottom right
+  for (let i = 0; i < 4; i++) {
+    const squareX = canvasWidth - 50 - i * 75 - 30; // Adjust the distance between squares
+    const squareY = canvasHeight - 75; // Adjust the Y position
+    const squareSize = 50; // Adjust the size of the square
 
-  if (i === 0) {
-    // Draw black border around the horizontally flipped image for Player 2
-    const borderWidth = 3;
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillRect(squareX, squareY, squareSize, squareSize);
-    c.save();
-    // Flip horizontally by scaling the x-axis by -1
-    c.scale(-1, 1);
-    
-    c.drawImage(customImage2, -squareX - squareSize, squareY, squareSize, squareSize);
-    
-    // Reset the transformation state
-    c.restore();
+    if (i === 0) {
+      // Draw black border around the horizontally flipped image for Player 2
+      const borderWidth = 3;
+      c.fillStyle = "rgba(0, 0, 0, 0.5)";
+      c.fillRect(squareX, squareY, squareSize, squareSize);
+      c.save();
+      // Flip horizontally by scaling the x-axis by -1
+      c.scale(-1, 1);
 
-    c.strokeStyle = "black";
-    c.lineWidth = borderWidth;
+      c.drawImage(
+        customImage2,
+        -squareX - squareSize,
+        squareY,
+        squareSize,
+        squareSize
+      );
 
-    // Draw the border using the flipped coordinates
-    c.strokeRect(squareX + 50 , squareY, -squareSize, squareSize);
-  } else {
-    c.fillStyle = "rgba(0, 0, 0, 0.5)";
-    c.fillRect(squareX, squareY, squareSize, squareSize);
+      // Reset the transformation state
+      c.restore();
+
+      c.strokeStyle = "black";
+      c.lineWidth = borderWidth;
+
+      // Draw the border using the flipped coordinates
+      c.strokeRect(squareX + 50, squareY, -squareSize, squareSize);
+    } else {
+      c.fillStyle = "rgba(0, 0, 0, 0.5)";
+      c.fillRect(squareX, squareY, squareSize, squareSize);
+    }
   }
-}
   c.drawImage(
     character1Image,
     character1X,
@@ -757,7 +752,6 @@ for (let i = 0; i < 4; i++) {
   // Redraw buttons
   drawRPSButtons();
   drawContinueButton();
- 
 }
 
 // Event listener for mouse clicks
@@ -790,7 +784,6 @@ canvas.addEventListener("click", function (e) {
     } else if (mouseX >= scissors2X && mouseX <= scissors2X + buttonWidth) {
       player2Choice = "S";
     }
-
 
     if (player1Choice !== null && player2Choice !== null) {
       animationPaused = true;
@@ -873,4 +866,3 @@ const scissors2X =
 drawButton(rock2X, buttonY, buttonWidth, buttonHeight, "R");
 drawButton(paper2X, buttonY, buttonWidth, buttonHeight, "P");
 drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, "S");
-
