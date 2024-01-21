@@ -514,7 +514,7 @@ function setupGame() {
     const squareSize = 50; 
     const squareColor = "red";
     if (i === 0) {
-      // Draw image instead of red square for the leftmost square
+      
       const borderWidth = 3;
       c.fillStyle = "rgba(0, 0, 0, 0.5)";
       c.fillRect(squareX, squareY, squareSize, squareSize);
@@ -528,19 +528,19 @@ function setupGame() {
     }
   }
 
-  // Draw squares on the bottom right
+  
   for (let i = 0; i < 4; i++) {
-    const squareX = canvasWidth - 50 - i * 75 - 30; // Adjust the distance between squares
-    const squareY = canvasHeight - 75; // Adjust the Y position
-    const squareSize = 50; // Adjust the size of the square
+    const squareX = canvasWidth - 50 - i * 75 - 30; 
+    const squareY = canvasHeight - 75;
+    const squareSize = 50; 
 
     if (i === 0) {
-      // Draw black border around the horizontally flipped image for Player 2
+      
       const borderWidth = 3;
       c.fillStyle = "rgba(0, 0, 0, 0.5)";
       c.fillRect(squareX, squareY, squareSize, squareSize);
       c.save();
-      // Flip horizontally by scaling the x-axis by -1
+      
       c.scale(-1, 1);
 
       c.drawImage(
