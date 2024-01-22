@@ -62,7 +62,7 @@ let player1HP = 100;
 let player2HP = 100;
 
 let currentFrame = 0;
-const frameCount = 15;
+const frameCount = 17;
 const frameInterval = 100;
 
 const characterWidth = 100;
