@@ -576,13 +576,12 @@ function setupGame() {
         squareSize
       );
 
-      // Reset the transformation state
+      
       c.restore();
 
       c.strokeStyle = "black";
       c.lineWidth = borderWidth;
 
-      // Draw the border using the flipped coordinates
       c.strokeRect(squareX + 50, squareY, -squareSize, squareSize);
     } else {
       c.fillStyle = "rgba(0, 0, 0, 0.5)";
@@ -601,10 +600,10 @@ function setupGame() {
 
   c.save();
 
-  // Flip horizontally by scaling the x-axis by -1
+
   c.scale(-1, 1);
 
-  // Draw player 2 with flipped coordinates
+ 
   c.drawImage(
     character2Image,
     -character2X - characterWidth - 12.25,
@@ -613,15 +612,15 @@ function setupGame() {
     characterHeight
   );
 
-  // Restore the transformation state
+  
   c.restore();
   drawRPSButtons();
 }
 
-// Call the setup function to initialize the game state
+
 setupGame();
 
-// Determine the winner based on RPS rules
+
 function determineWinner() {
   if (player1Choice !== null && player2Choice === null) {
     return "Player 1 wins!";
@@ -654,7 +653,7 @@ function redrawCanvas() {
   clearCanvas();
 
   c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-  // Draw black trapezoid background for the round number
+ 
   const trapezoidHeight = 40;
   const trapezoidTopWidth = 200;
   const trapezoidBottomWidth = 400;
@@ -687,21 +686,20 @@ function redrawCanvas() {
   const roundCounterText = "Round " + roundCount;
   const roundCounterTextWidth = c.measureText(roundCounterText).width;
   c.fillText(roundCounterText, canvasWidth / 2 - roundCounterTextWidth / 2, 27);
-  // Draw HP bars for each player
-  // Draw characters
+  
   const characterWidth = 100;
   const characterHeight = 100;
   drawHPBar("Player 1", player1HP, 10, 30, "blue");
   drawHPBar("Player 2", player2HP, canvasWidth - 210, 30, "green");
 
-  // Draw squares on the bottom left
+  
   for (let i = 0; i < 4; i++) {
-    const squareX = i * 75 + 30; // Adjust the distance between squares
-    const squareY = canvasHeight - 75; // Adjust the Y position
-    const squareSize = 50; // Adjust the size of the square
-    const squareColor = "red"; // Adjust the color of the square
+    const squareX = i * 75 + 30; 
+    const squareY = canvasHeight - 75; 
+    const squareSize = 50; 
+    const squareColor = "red"; 
     if (i === 0) {
-      // Draw image instead of red square for the leftmost square
+     
       const borderWidth = 3;
       c.fillStyle = "rgba(0, 0, 0, 0.5)";
       c.fillRect(squareX, squareY, squareSize, squareSize);
@@ -715,19 +713,19 @@ function redrawCanvas() {
     }
   }
 
-  // Draw squares on the bottom right
+  
   for (let i = 0; i < 4; i++) {
-    const squareX = canvasWidth - 50 - i * 75 - 30; // Adjust the distance between squares
-    const squareY = canvasHeight - 75; // Adjust the Y position
-    const squareSize = 50; // Adjust the size of the square
+    const squareX = canvasWidth - 50 - i * 75 - 30; 
+    const squareY = canvasHeight - 75; 
+    const squareSize = 50; 
 
     if (i === 0) {
-      // Draw black border around the horizontally flipped image for Player 2
+     
       const borderWidth = 3;
       c.fillStyle = "rgba(0, 0, 0, 0.5)";
       c.fillRect(squareX, squareY, squareSize, squareSize);
       c.save();
-      // Flip horizontally by scaling the x-axis by -1
+    
       c.scale(-1, 1);
 
       c.drawImage(
@@ -738,13 +736,13 @@ function redrawCanvas() {
         squareSize
       );
 
-      // Reset the transformation state
+      
       c.restore();
 
       c.strokeStyle = "black";
       c.lineWidth = borderWidth;
 
-      // Draw the border using the flipped coordinates
+      
       c.strokeRect(squareX + 50, squareY, -squareSize, squareSize);
     } else {
       c.fillStyle = "rgba(0, 0, 0, 0.5)";
@@ -760,10 +758,10 @@ function redrawCanvas() {
   );
   c.save();
 
-  // Flip horizontally by scaling the x-axis by -1
+  
   c.scale(-1, 1);
 
-  // Draw player 2 with flipped coordinates
+
   c.drawImage(
     character2Image,
     -character2X - characterWidth - 12.25,
@@ -772,9 +770,9 @@ function redrawCanvas() {
     characterHeight
   );
 
-  // Restore the transformation state
+ 
   c.restore();
-  // Redraw buttons
+  
   drawRPSButtons();
   drawContinueButton();
 }
@@ -854,7 +852,7 @@ canvas.addEventListener("mousemove", function (e) {
   }
 });
 
-// First character buttons
+
 const rock1X = character1X + (characterWidth - buttonWidth) / 2;
 const paper1X =
   character1X +
@@ -871,7 +869,7 @@ const scissors1X =
 const buttonY = character1Y - buttonHeight - 5;
 
 
-// Second character buttons
+
 const rock2X = character2X + (characterWidth - buttonWidth) / 2;
 const paper2X =
   character2X +
