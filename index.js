@@ -16,6 +16,18 @@ const player1IdleFrames = [
   "girlKnightSprite/Idle (9).png?v=1",
   "girlKnightSprite/Idle (10).png?v=1",
 ];
+const player1WalkFrames = [
+  "girlKnightSprite/Walk (1).png?v=1",
+  "girlKnightSprite/Walk (2).png?v=1",
+  "girlKnightSprite/Walk (3).png?v=1",
+  "girlKnightSprite/Walk (4).png?v=1",
+  "girlKnightSprite/Walk (5).png?v=1",
+  "girlKnightSprite/Walk (6).png?v=1",
+  "girlKnightSprite/Walk (7).png?v=1",
+  "girlKnightSprite/Walk (8).png?v=1",
+  "girlKnightSprite/Walk (9).png?v=1",
+  "girlKnightSprite/Walk (10).png?v=1",
+];
 const player1RunFrames = [
   "girlKnightSprite/Run (1).png",
   "girlKnightSprite/Run (2).png",
@@ -26,8 +38,21 @@ const player1RunFrames = [
   "girlKnightSprite/Run (7).png",
   "girlKnightSprite/Run (8).png",
   "girlKnightSprite/Run (9).png",
+  "girlKnightSprite/Run (10).png"
 ];
 const player2IdleFrames = [
+  "redhatSprite/Idle (1).png",
+  "redhatSprite/Idle (2).png",
+  "redhatSprite/Idle (3).png",
+  "redhatSprite/Idle (4).png",
+  "redhatSprite/Idle (5).png",
+  "redhatSprite/Idle (6).png",
+  "redhatSprite/Idle (7).png",
+  "redhatSprite/Idle (8).png",
+  "redhatSprite/Idle (9).png",
+  "redhatSprite/Idle (10).png",
+];
+const player2RunFrames = [
   "redhatSprite/Idle (1).png",
   "redhatSprite/Idle (2).png",
   "redhatSprite/Idle (3).png",
@@ -132,7 +157,7 @@ function updateTimer() {
 function decreaseTimer() {
   if (animationPaused === false && remainingTime > 0) {
     remainingTime--;
-    console.log(remainingTime);
+    
   }
   if (remainingTime === 0) {
     animationPaused = true;
@@ -372,8 +397,8 @@ preloadImages(
 );
 
 function drawRPSButtons() {
-  const paper1X = character1X + (characterWidth - buttonWidth) / 2;
-  const rock1X =
+  const rock1X = character1X + (characterWidth - buttonWidth) / 2;
+  const paper1X =
     character1X +
     characterWidth / 4 -
     buttonWidth / 2 -
@@ -754,12 +779,13 @@ function redrawCanvas() {
   drawContinueButton();
 }
 
-// Event listener for mouse clicks
+
 canvas.addEventListener("click", function (e) {
   const mouseX = e.clientX - canvas.getBoundingClientRect().left;
   const mouseY = e.clientY - canvas.getBoundingClientRect().top;
-
-  // Check if the click is within the button area
+console.log(player1Choice)
+console.log(player2Choice)
+ 
   if (
     mouseY >= buttonY - 20 &&
     mouseY <= buttonY + buttonHeight &&
@@ -770,7 +796,7 @@ canvas.addEventListener("click", function (e) {
       (mouseX >= paper2X && mouseX <= paper2X + buttonWidth) ||
       (mouseX >= scissors2X && mouseX <= scissors2X + buttonWidth))
   ) {
-    // Check which button was clicked and store the choice
+   
     if (mouseX >= rock1X && mouseX <= rock1X + buttonWidth) {
       player1Choice = "R";
     } else if (mouseX >= paper1X && mouseX <= paper1X + buttonWidth) {
@@ -789,14 +815,14 @@ canvas.addEventListener("click", function (e) {
       animationPaused = true;
       result = determineWinner();
 
-      // Adjust HP based on the result
+      
       if (result === "Player 1 wins!" && player2HP > 0) {
-        player2HP -= 10; // Decrease HP for Player 2
+        player2HP -= 10;
       } else if (result === "Player 2 wins!" && player1HP > 0) {
-        player1HP -= 10; // Decrease HP for Player 1
+        player1HP -= 10;
       }
 
-      // Display the result on the canvas
+      
       redrawCanvas();
       drawResult(result);
       remainingTime = 15;
@@ -806,12 +832,12 @@ canvas.addEventListener("click", function (e) {
   }
 });
 
-// Mouseover event to change cursor to pointer
+
 canvas.addEventListener("mousemove", function (e) {
   const mouseX = e.clientX - canvas.getBoundingClientRect().left;
   const mouseY = e.clientY - canvas.getBoundingClientRect().top;
 
-  // Check if the mouse is over any of the buttons
+  
   if (
     mouseY >= buttonY - 20 &&
     mouseY <= buttonY + buttonHeight &&
@@ -844,9 +870,6 @@ const scissors1X =
   buttonWidth;
 const buttonY = character1Y - buttonHeight - 5;
 
-drawButton(rock1X, buttonY, buttonWidth, buttonHeight, "R");
-drawButton(paper1X, buttonY, buttonWidth, buttonHeight, "P");
-drawButton(scissors1X, buttonY, buttonWidth, buttonHeight, "S");
 
 // Second character buttons
 const rock2X = character2X + (characterWidth - buttonWidth) / 2;
@@ -863,6 +886,3 @@ const scissors2X =
   buttonSpacing +
   buttonWidth;
 
-drawButton(rock2X, buttonY, buttonWidth, buttonHeight, "R");
-drawButton(paper2X, buttonY, buttonWidth, buttonHeight, "P");
-drawButton(scissors2X, buttonY, buttonWidth, buttonHeight, "S");
